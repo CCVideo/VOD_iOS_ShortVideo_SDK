@@ -8,4 +8,6 @@ pod 'MJExtension', '~> 3.0.13'
 
 pod 'MBProgressHUD', '~> 1.0.0'
 
+pod 'LYAVPlayer','~> 1.0.1'
+
 end

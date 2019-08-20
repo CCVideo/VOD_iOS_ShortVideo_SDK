@@ -10,7 +10,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "GPUImage.h"
-#import "Masonry.h"
+
 #import "DWUploadViewController.h"
 
 #import "Util.h"
@@ -18,10 +18,12 @@
 #import "DWuploadModel.h"
 
 #import "ShortEditViewController.h"
+#import "VideoTimeViewController.h"
+#import "VideoSizeViewController.h"
 
 
 
-static NSString  *const shortVideo =@"ShortVideo";
+NSString  *const shortVideo =@"ShortVideo";
 
 static const NSInteger timeSeconds =10;//默认10s
 
@@ -29,7 +31,7 @@ static const double floatTime =0.02;
 
 static const CGFloat viewHight =4.5;
 
-@interface ShortVideoViewController (){
+@interface ShortVideoViewController ()<UIVideoEditorControllerDelegate,UINavigationControllerDelegate>{
 
     GPUImageVideoCamera *videoCamera;
     GPUImageOutput <GPUImageInput> *filter;
@@ -50,6 +52,9 @@ static const CGFloat viewHight =4.5;
     UIButton *recordBtn;//录制
     UIButton *uploadBtn;//上传
     UIButton *beautyBtn;//美颜
+    
+    UIButton *videoTimeBtn;//视长剪辑
+    UIButton *videoCropBtn;//视频剪辑
     
     UIView *bottomView;
     UIView *backgroundView;
@@ -87,7 +92,7 @@ static const CGFloat viewHight =4.5;
 @end
 
 /**
- *注意 在info.plist文件设置麦克风 相机 相册权限
+ *注意 在info.plist文件设置麦克风 相机 相册 图片等权限
  *基于GPUImage 建议用cocoapods导入 也可手动导入 确保工程中只导入一次GPUImage
   GPUImage引入后 修改以下部分：
   1.GPUImageMovieWriter.h文件中添加isNeedBreakAudioWhiter属性
@@ -128,7 +133,7 @@ static const CGFloat viewHight =4.5;
 
     [self removeTimer];
     
-    logdebug(@"%@销毁了",[self description]);
+    NSLog(@"%@销毁了",[self description]);
     
 }
 
@@ -248,7 +253,7 @@ static const CGFloat viewHight =4.5;
         BOOL bCreateDir = [fileManager createDirectoryAtPath:folderPath withIntermediateDirectories:YES attributes:nil error:nil];
         if(!bCreateDir){
             
-            logdebug(@"创建保存视频文件夹失败");
+            NSLog(@"创建保存视频文件夹失败");
         }
     }
 }
@@ -258,6 +263,7 @@ static const CGFloat viewHight =4.5;
     //录制相关
     videoCamera = [[GPUImageVideoCamera alloc] initWithSessionPreset:AVCaptureSessionPreset1280x720
                                                       cameraPosition:AVCaptureDevicePositionBack];
+    
     
     if ([videoCamera.inputCamera lockForConfiguration:nil]) {
         //自动对焦
@@ -295,19 +301,15 @@ static const CGFloat viewHight =4.5;
     
     
     [videoCamera addTarget:filterView];
-    
     //相机开始运行
     [videoCamera startCameraCapture];
-    
-  
-    
     
 }
 
 - (void)initMovieWriter{
     
     //苹果默认是MOV格式
-    NSString *path =[self getVideoSaveFilePathString:@".mov" addPathArray:YES];
+    NSString *path =[self getVideoSaveFilePathString:@".MOV" addPathArray:YES];
     unlink([path UTF8String]);
     videoURL =[NSURL fileURLWithPath:path];
     
@@ -401,14 +403,16 @@ static const CGFloat viewHight =4.5;
     [recordBtn mas_makeConstraints:^(MASConstraintMaker *make) {
        
         make.centerX.mas_equalTo(bottomView);
-        make.top.mas_equalTo(backgroundView.mas_bottom).offset(36);
+        make.top.mas_equalTo(backgroundView.mas_bottom).offset(50);
         make.height.width.mas_equalTo(65);
+        
         
         
     }];
     
-    uploadBtn =[self creatBtnWithImage:@"finish" selectImage:@"finish" selector:@selector(uploadClick)];
+    uploadBtn =[self creatBtnWithImage:@"finish" selectImage:@"finish" selector:@selector(uploadClick:)];
     [bottomView addSubview:uploadBtn];
+    uploadBtn.tag =100;
     uploadBtn.layer.cornerRadius =89/2/2;
     uploadBtn.layer.masksToBounds =YES;
     [uploadBtn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -433,6 +437,40 @@ static const CGFloat viewHight =4.5;
     }];
     
     
+    videoTimeBtn =[UIButton buttonWithType:UIButtonTypeCustom];
+    videoTimeBtn.titleLabel.textAlignment =NSTextAlignmentCenter;
+    [videoTimeBtn setTitle:@"视长剪辑" forState:UIControlStateNormal];
+    [videoTimeBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [videoTimeBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateSelected];
+    videoTimeBtn.titleLabel.font =[UIFont systemFontOfSize:14];
+    videoTimeBtn.tag =101;
+    [videoTimeBtn addTarget:self action:@selector(uploadClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:videoTimeBtn];
+    [videoTimeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+       
+       make.top.mas_equalTo(backgroundView.mas_bottom).offset(10);
+       make.left.mas_equalTo(self.view).offset(15);
+        make.height.mas_equalTo(32);
+        make.width.mas_equalTo(90);
+    }];
+    
+    
+    videoCropBtn =[UIButton buttonWithType:UIButtonTypeCustom];
+    videoCropBtn.titleLabel.textAlignment =NSTextAlignmentCenter;
+    [videoCropBtn setTitle:@"视频剪辑" forState:UIControlStateNormal];
+    [videoCropBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [videoCropBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateSelected];
+    videoCropBtn.titleLabel.font =[UIFont systemFontOfSize:14];
+    videoCropBtn.tag =102;
+    [videoCropBtn addTarget:self action:@selector(uploadClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:videoCropBtn];
+    [videoCropBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.top.height.width.mas_equalTo(videoTimeBtn);
+        make.right.mas_equalTo(self.view).offset(-15);
+        
+        
+    }];
     
 }
 
@@ -450,6 +488,7 @@ static const CGFloat viewHight =4.5;
     
     
 }
+
 
 - (void)closeClick{
 
@@ -574,50 +613,59 @@ static const CGFloat viewHight =4.5;
 }
 
 //上传到服务器
-- (void)uploadClick{
+- (void)uploadClick:(UIButton *)btn{
+    
+   
+    
+    btn.selected =!btn.selected;
     
     if (isRecording) {
-        
+
         [self stopWrite];
-        [videoCamera stopCameraCapture];
-        
+       // [videoCamera stopCameraCapture];
+
     }
+    //调用延时的方法 否则会出现诡异的bug
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
     
-    //合成视频
-    NSString *path =[self getVideoSaveFilePathString:@".MOV" addPathArray:NO];
-    
-    logdebug(@"合成视频数组:%@",self.pathArray);
-    hud =[MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.label.text =@"视频生成中";
-    
-    WeakSelf(self);
-    [DWShortTool dw_mergeAndExportVideos:self.pathArray withOutPath:path outputFileType:AVFileTypeQuickTimeMovie presetName:AVAssetExportPreset1280x720	  didComplete:^(NSError *error,NSURL *mergeFileURL) {
+        //合成视频输出路径
+        NSString *path =[self getVideoSaveFilePathString:@".MOV" addPathArray:NO];
         
-        StrongSelf(self);
+        NSLog(@"合成视频数组:%@",self.pathArray);
+        hud =[MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.label.text =@"视频生成中";
         
-        [hud hideAnimated:YES];
+        WeakSelf(self);
+        [DWShortTool dw_mergeAndExportVideos:self.pathArray withOutPath:path outputFileType:AVFileTypeQuickTimeMovie presetName:AVAssetExportPreset1280x720      didComplete:^(NSError *error,NSURL *mergeFileURL) {
+            
+            StrongSelf(self);
+            
+            [hud hideAnimated:YES];
             
             if (!error) {
                 
-               
+                NSLog(@"输出路径%@____%@",mergeFileURL.path,path);
                 [self saveModelToVideoArray];
-                [self savePhotosAlbum:mergeFileURL];
-                
-                [self turnNextViewControllerWithVideoURL:mergeFileURL];
-                
-              
-              }else{
+                //   [self savePhotosAlbum:mergeFileURL];
+                [self turnNextViewControllerWithVideoURL:mergeFileURL tag:btn.tag];
                 
                 
-                logdebug(@"%@",[error localizedDescription]);
+            }else{
+                
+                
+                NSLog(@"%@",[error localizedDescription]);
             }
             
         }];
+        
+    });
+    
+  
     
 }
 
 
-- (void)turnNextViewControllerWithVideoURL:(NSURL *)pathURL{
+- (void)turnNextViewControllerWithVideoURL:(NSURL *)pathURL tag:(NSInteger)btnTag{
 
     dispatch_async(dispatch_get_main_queue(), ^{
         
@@ -633,13 +681,44 @@ static const CGFloat viewHight =4.5;
         [self.viewArray removeAllObjects];
         [self.secondsArray removeAllObjects];
         
+        videoTimeBtn.selected =NO;
+        videoCropBtn.selected =NO;
+        
         //归零
         seconds =0.00;
         totalTime =0.00;
         
+        if (btnTag ==100) {
+            
+            DWUploadViewController *viewCtrl =[[DWUploadViewController alloc]init];
+            [self.navigationController pushViewController:viewCtrl animated:YES];
+            
+        }else if (btnTag ==101){
+            
+            
+            //视频时长剪辑
+            VideoTimeViewController *viewCtrl =[[VideoTimeViewController alloc]init];
+            viewCtrl.filePath =pathURL.path;
+            
+            [self.navigationController pushViewController:viewCtrl animated:NO];
+           
+ //系统自带VideoEditor
+//            UIVideoEditorController *viewCtrl =[[UIVideoEditorController alloc]init];
+//            viewCtrl.videoPath =pathURL.path;
+//            viewCtrl.delegate =self;
+//            [self presentViewController:viewCtrl animated:YES completion:nil];
+
+            
+        }else{
+            
+            //视频区域剪辑
+            VideoSizeViewController *viewCtrl =[[VideoSizeViewController alloc]init];
+            viewCtrl.filePath =pathURL.path;
+            [self.navigationController pushViewController:viewCtrl animated:NO];
+            
+        }
         
-        DWUploadViewController *viewCtrl =[[DWUploadViewController alloc]init];
-        [self.navigationController pushViewController:viewCtrl animated:YES];
+      
         
         
 //        ShortEditViewController *viewCtrl =[[ShortEditViewController alloc]init];
@@ -657,8 +736,7 @@ static const CGFloat viewHight =4.5;
 - (void)saveModelToVideoArray{
     
     
-    logdebug(@"合成的数组为%ld",self.pathArray.count);
-    
+    NSLog(@"合成的数组为%ld",self.pathArray.count);
     self.videoArray =[[[NSUserDefaults standardUserDefaults] objectForKey:@"videoArray"] mutableCopy];
     
     //去重 用相对路径的后缀来判断
@@ -713,13 +791,13 @@ static const CGFloat viewHight =4.5;
         [view removeFromSuperview];
         [self.viewArray removeLastObject];
         
-        logdebug(@"数组__%@__%@",self.pathArray,self.viewArray);
+        NSLog(@"数组__%@__%@",self.pathArray,self.viewArray);
         
         //要减去相应的录制时间
         double recordTime =[[self.secondsArray lastObject] doubleValue];
         totalTime -=recordTime;
         [self.secondsArray removeLastObject];
-        logdebug(@"余下录制时间%f__%f",totalTime,recordTime);
+        NSLog(@"余下录制时间%f__%f",totalTime,recordTime);
         
         
         
@@ -755,7 +833,7 @@ static const CGFloat viewHight =4.5;
     
     NSString *documentsDirectory = [[paths objectAtIndex:0] stringByAppendingPathComponent:shortVideo];
     fileList =[fileManager contentsOfDirectoryAtPath:documentsDirectory error:&error];
-    logdebug(@"路径==%@,fileList%@___", documentsDirectory,fileList);
+    NSLog(@"路径==%@,fileList%@___", documentsDirectory,fileList);
     
     
 }
@@ -809,7 +887,7 @@ static const CGFloat viewHight =4.5;
             
             if ([number integerValue] >=timeSeconds) {
                 
-                logdebug(@"结束时间%f%ld",totalTime,timeSeconds);
+                NSLog(@"结束时间%f%ld",totalTime,timeSeconds);
                 
                 [self stopWrite];
             }
@@ -851,14 +929,14 @@ static const CGFloat viewHight =4.5;
     
     beautyBtn.hidden =NO;
     [self.secondsArray addObject:[NSString stringWithFormat:@"%f",seconds]];
-  //  [self saveModelToVideoArray];
+    [self saveModelToVideoArray];
     
     recordBtn.selected =NO;
     
     isRecording =NO;
     
     [self savePhotosAlbum:videoURL];
-    logdebug(@"录制时间为%f 当前时间为%f",seconds,totalTime);
+    NSLog(@"录制时间为%f 当前时间为%f",seconds,totalTime);
         
 }
 
@@ -944,6 +1022,34 @@ static const CGFloat viewHight =4.5;
     return videoPath;
     
 }
+
+
+#pragma mark----UIVideoEditorControllerDelegate------
+//编辑成功后的Video被保存在沙盒的临时目录中
+- (void)videoEditorController:(UIVideoEditorController *)editor didSaveEditedVideoToPath:(NSString *)editedVideoPath {
+    
+    NSLog(@"+++++++++++++++%@",editedVideoPath);
+    [self savePhotosAlbum:[NSURL fileURLWithPath:editedVideoPath]];
+    
+    
+}
+// 编辑失败后调用的方法
+- (void)videoEditorController:(UIVideoEditorController *)editor didFailWithError:(NSError *)error {
+    
+    NSLog(@"%@",error.description);
+    
+    
+}
+//编辑取消后调用的方法
+- (void)videoEditorControllerDidCancel:(UIVideoEditorController *)editor {
+    
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -11,11 +11,11 @@
 
 #if DEBUG
 
-#define logdebug(format, ...) NSLog(@"%s():%d "format, __func__, __LINE__, ##__VA_ARGS__)
+#define NSLog(format, ...) NSLog(@"%s():%d "format, __func__, __LINE__, ##__VA_ARGS__)
 
 #else
 
-#define logdebug(format, ...)
+#define NSLog(format, ...)
 
 #endif
 
@@ -24,6 +24,9 @@
 
 #define ScreenWidth  [UIScreen mainScreen].bounds.size.width
 #define ScreenHeight [UIScreen mainScreen].bounds.size.height
+
+#define SCREEN_WIDTH [UIScreen mainScreen].bounds.size.width
+#define SCREEN_HEIGHT [UIScreen mainScreen].bounds.size.height
 
 // 账户信息
 #define DWACCOUNT_USERID @""
@@ -41,7 +44,8 @@
 
 #import "MJExtension.h"
 #import "MBProgressHUD.h"
-#import "DWShortSDK.h"
+#import "DWShortTool.h"
+#import "Masonry.h"
 
 
 

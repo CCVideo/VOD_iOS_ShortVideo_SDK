@@ -627,7 +627,7 @@ header, .context-menu, .megamenu-content, footer{
 </style>
 </head>
 <body class='typora-export' >
-<div  id='write'  class = 'is-mac'><p>版本：1.0.0</p><p>日期：2018-05-22</p><h1><a name='header-c9' class='md-header-anchor '></a>1.概述</h1><p>iOS短视频SDK是适用于iOS平台的短视频SDK。使用此SDK可以实现短视频相关功能。</p><h2><a name='header-c11' class='md-header-anchor '></a>1.1 功能特性</h2><table><thead><tr><th style='text-align:left;' >功能</th><th style='text-align:left;' >描述</th></tr></thead><tbody><tr><td style='text-align:left;' >拍摄</td><td style='text-align:left;' >支持短视频拍摄</td></tr><tr><td style='text-align:left;' >摄像头切换</td><td style='text-align:left;' >支持拍摄过程中切换摄像头</td></tr><tr><td style='text-align:left;' >断点拍摄</td><td style='text-align:left;' >支持拍摄过程中可暂停</td></tr><tr><td style='text-align:left;' >美颜滤镜</td><td style='text-align:left;' >支持拍摄加入美颜滤镜</td></tr></tbody></table><h2><a name='header-c29' class='md-header-anchor '></a>1.2阅读对象</h2><p>本文档为技术文档，需要阅读者：</p><ul><li>具备基本的iOS开发能力</li><li>准备接入CC视频的短视频SDK</li></ul><h1><a name='header-c39' class='md-header-anchor '></a>2.开发准备</h1><h2><a name='header-c40' class='md-header-anchor '></a>2.1开发环境</h2><ul><li>Xcode：苹果官方IDE</li><li>iOS8+</li></ul><h2><a name='header-c48' class='md-header-anchor '></a>2.2SDK使用说明</h2><p>首先，需要下载最新版本的SDK，下载地址为：<a href='https://github.com/CCVideo/VOD_iOS_ShortVideo_SDK'>VOD_iOS_ShortVideo_SDK</a>,然后导入SDK包到工程,在相应地方引入头文件<code>#import &quot;DWShortSDK&quot;</code></p><table><thead><tr><th style='text-align:left;' >名称</th><th style='text-align:left;' >描述</th></tr></thead><tbody><tr><td style='text-align:left;' >Demo</td><td style='text-align:left;' >使用SDK的示例源码</td></tr><tr><td style='text-align:left;' >doc</td><td style='text-align:left;' >存放的是iOS短视频SDK开发指南html文档</td></tr><tr><td style='text-align:left;' >include</td><td style='text-align:left;' >SDK开放的头文件及静态库</td></tr></tbody></table><h1><a name='header-c64' class='md-header-anchor '></a>3.快速集成</h1><p>注：快速集成主要提供的是拍摄功能</p><h2><a name='header-c66' class='md-header-anchor '></a>3.1拍摄快速集成</h2><h3><a name='header-c68' class='md-header-anchor '></a>3.1.1SDK添加到项目后，在info.plist文件设置麦克风 相机 相册 图片权限</h3><pre class='md-fences mock-cm' style='display:block;position:relative'>&lt;!-- 相册 --&gt;   
+<div  id='write'  class = 'is-mac'><p>版本：1.0.2</p><p>日期：2018-07-10</p><h1><a name='header-c9' class='md-header-anchor '></a>1.概述</h1><p>iOS短视频SDK是适用于iOS平台的短视频SDK。使用此SDK可以实现短视频相关功能。</p><h2><a name='header-c11' class='md-header-anchor '></a>1.1 功能特性</h2><table><thead><tr><th style='text-align:left;' >功能</th><th style='text-align:left;' >描述</th></tr></thead><tbody><tr><td style='text-align:left;' >拍摄</td><td style='text-align:left;' >支持短视频拍摄</td></tr><tr><td style='text-align:left;' >摄像头切换</td><td style='text-align:left;' >支持拍摄过程中切换摄像头</td></tr><tr><td style='text-align:left;' >断点拍摄</td><td style='text-align:left;' >支持拍摄过程中可暂停</td></tr><tr><td style='text-align:left;' >美颜滤镜</td><td style='text-align:left;' >支持拍摄加入美颜滤镜</td></tr><tr><td style='text-align:left;' >视频时长剪辑</td><td style='text-align:left;' >支持选取视频时长剪辑</td></tr><tr><td style='text-align:left;' >视频区域剪辑</td><td style='text-align:left;' >支持选取视频区域剪辑</td></tr></tbody></table><h2><a name='header-c35' class='md-header-anchor '></a>1.2阅读对象</h2><p>本文档为技术文档，需要阅读者：</p><ul><li>具备基本的iOS开发能力</li><li>准备接入CC视频的短视频SDK</li></ul><h1><a name='header-c45' class='md-header-anchor '></a>2.开发准备</h1><h2><a name='header-c46' class='md-header-anchor '></a>2.1开发环境</h2><ul><li>Xcode：苹果官方IDE</li><li>iOS8+</li></ul><h2><a name='header-c54' class='md-header-anchor '></a>2.2SDK使用说明</h2><p>首先，需要下载最新版本的SDK，下载地址为：<a href='https://github.com/CCVideo/VOD_iOS_ShortVideo_SDK'>VOD_iOS_ShortVideo_SDK</a>,然后导入SDK包到工程,在相应地方引入头文件<code>#import &quot;DWShortSDK&quot;</code></p><table><thead><tr><th style='text-align:left;' >名称</th><th style='text-align:left;' >描述</th></tr></thead><tbody><tr><td style='text-align:left;' >Demo</td><td style='text-align:left;' >使用SDK的示例源码</td></tr><tr><td style='text-align:left;' >doc</td><td style='text-align:left;' >存放的是iOS短视频SDK开发指南html文档</td></tr><tr><td style='text-align:left;' >include</td><td style='text-align:left;' >SDK开放的头文件及静态库</td></tr></tbody></table><h1><a name='header-c70' class='md-header-anchor '></a>3.快速集成</h1><p>注：快速集成主要提供的是拍摄功能</p><h2><a name='header-c72' class='md-header-anchor '></a>3.1拍摄快速集成</h2><h3><a name='header-c74' class='md-header-anchor '></a>3.1.1SDK添加到项目后，在info.plist文件设置麦克风 相机 相册 图片权限</h3><pre class='md-fences mock-cm' style='display:block;position:relative'>&lt;!-- 相册 --&gt;   
 &lt;key&gt;NSPhotoLibraryUsageDescription&lt;/key&gt;   
 &lt;string&gt;App需要您的同意,才能访问相册&lt;/string&gt;   
 &lt;!-- 相机 --&gt;   
@@ -638,7 +638,7 @@ header, .context-menu, .megamenu-content, footer{
 &lt;string&gt;App需要您的同意,才能访问麦克风&lt;/string&gt;
 &lt;!-- 图片 --&gt; 
 &lt;key&gt;NSPhotoLibraryAddUsageDescription&lt;/key&gt;
-&lt;string&gt;App需要您的同意,才能保存图片到您的相册&lt;/string&gt;  </pre><h3><a name='header-c70' class='md-header-anchor '></a>3.1.2基于GPUImage 建议用cocoapods导入 也可手动导入 确保工程中只导入一次GPUImage</h3><h3><a name='header-c71' class='md-header-anchor '></a>3.1.3GPUImage引入后 修改以下部分：</h3><pre class='md-fences mock-cm' style='display:block;position:relative'>  1.GPUImageMovieWriter.h文件中添加isNeedBreakAudioWhiter属性
+&lt;string&gt;App需要您的同意,才能保存图片到您的相册&lt;/string&gt;  </pre><h3><a name='header-c76' class='md-header-anchor '></a>3.1.2基于GPUImage 建议用cocoapods导入 也可手动导入 确保工程中只导入一次GPUImage</h3><h3><a name='header-c77' class='md-header-anchor '></a>3.1.3GPUImage引入后 修改以下部分：</h3><pre class='md-fences mock-cm' style='display:block;position:relative'>  1.GPUImageMovieWriter.h文件中添加isNeedBreakAudioWhiter属性
  
     @property (nonatomic, assign) BOOL isNeedBreakAudioWhiter;
  
@@ -665,7 +665,7 @@ header, .context-menu, .megamenu-content, footer{
     }
  
  3.GPUImageMovieWriter初始化时设置 isNeedBreakAudioWhiter =YES;
- 具体详情参见demo</pre><h3><a name='header-c73' class='md-header-anchor '></a>3.1.3初始化相机及filterView</h3><pre class='md-fences mock-cm' style='display:block;position:relative'>//录制相关
+ 具体详情参见demo</pre><h3><a name='header-c79' class='md-header-anchor '></a>3.1.3初始化相机及filterView</h3><pre class='md-fences mock-cm' style='display:block;position:relative'>//录制相关
     videoCamera = [[GPUImageVideoCamera alloc] initWithSessionPreset:AVCaptureSessionPreset1280x720
                                                       cameraPosition:AVCaptureDevicePositionBack];
     
@@ -707,7 +707,7 @@ header, .context-menu, .megamenu-content, footer{
     [videoCamera addTarget:filterView];
      //相机开始运行
     [videoCamera startCameraCapture];
-</pre><h3><a name='header-c75' class='md-header-anchor '></a>3.1.4初始化moviewriter</h3><pre class='md-fences mock-cm' style='display:block;position:relative'>    //写入
+</pre><h3><a name='header-c81' class='md-header-anchor '></a>3.1.4初始化moviewriter</h3><pre class='md-fences mock-cm' style='display:block;position:relative'>    //写入
     movieWriter = [[GPUImageMovieWriter alloc] initWithMovieURL:videoURL size:CGSizeMake(720.0, 1280.0)];
     
     //设置为liveVideo
@@ -720,7 +720,7 @@ header, .context-menu, .megamenu-content, footer{
 
     //设置声音
     videoCamera.audioEncodingTarget = movieWriter;
-</pre><h1><a name='header-c77' class='md-header-anchor '></a>4.功能使用</h1><h2><a name='header-c78' class='md-header-anchor '></a>4.1删除功能具体使用</h2><pre class='md-fences mock-cm' style='display:block;position:relative'>  //删除前要停止录制 
+</pre><h1><a name='header-c83' class='md-header-anchor '></a>4.功能使用</h1><h2><a name='header-c84' class='md-header-anchor '></a>4.1删除功能具体使用</h2><pre class='md-fences mock-cm' style='display:block;position:relative'>  //删除前要停止录制 
    if (isRecording) {
         
         [self stopWrite];
@@ -749,7 +749,7 @@ header, .context-menu, .megamenu-content, footer{
         //注意要减去相应的录制时间
         double recordTime =[[self.secondsArray lastObject] doubleValue];
         totalTime -=recordTime;
-        [self.secondsArray removeLastObject];</pre><h2><a name='header-c80' class='md-header-anchor '></a>4.2切换功能具体使用</h2><pre class='md-fences mock-cm' style='display:block;position:relative'>   //前置摄像头不打开闪光灯
+        [self.secondsArray removeLastObject];</pre><h2><a name='header-c86' class='md-header-anchor '></a>4.2切换功能具体使用</h2><pre class='md-fences mock-cm' style='display:block;position:relative'>   //前置摄像头不打开闪光灯
     if (videoCamera.inputCamera.position == AVCaptureDevicePositionFront) {
          return;
     }
@@ -777,7 +777,7 @@ header, .context-menu, .megamenu-content, footer{
        }
         
     }
-</pre><h2><a name='header-c82' class='md-header-anchor '></a>4.3美颜滤镜功能具体使用</h2><pre class='md-fences mock-cm' style='display:block;position:relative'> beautyBtn.selected =!beautyBtn.selected;
+</pre><h2><a name='header-c88' class='md-header-anchor '></a>4.3美颜滤镜功能具体使用</h2><pre class='md-fences mock-cm' style='display:block;position:relative'> beautyBtn.selected =!beautyBtn.selected;
     if (beautyBtn.selected) {
         
         // 移除之前所有的处理链
@@ -797,7 +797,7 @@ header, .context-menu, .megamenu-content, footer{
         [videoCamera addTarget:filterView];
     
  }
-</pre><h2><a name='header-c84' class='md-header-anchor '></a>4.4暂停功能具体使用</h2><pre class='md-fences mock-cm' style='display:block;position:relative'> //因为GCDtimer较为精准 务必先调用移除定时器的方法 再调用停止录制的方法
+</pre><h2><a name='header-c90' class='md-header-anchor '></a>4.4暂停功能具体使用</h2><pre class='md-fences mock-cm' style='display:block;position:relative'> //因为GCDtimer较为精准 务必先调用移除定时器的方法 再调用停止录制的方法
     [self removeTimer];
     dispatch_async(dispatch_get_main_queue(), ^{
         //注意顺序
@@ -814,7 +814,7 @@ header, .context-menu, .megamenu-content, footer{
     recordBtn.selected =NO;
     isRecording =NO;
     [self savePhotosAlbum:videoURL];
-    logdebug(@&quot;录制时间为%f 当前时间为%f&quot;,seconds,totalTime);</pre><h2><a name='header-c86' class='md-header-anchor '></a>4.5断点拍摄功能具体使用</h2><p>断点拍摄后的几个小视频可以合成为一个视频, DWShortTool提供了如下接口用于合成视频:</p><pre class='md-fences mock-cm' style='display:block;position:relative'>/* 合成视频|转换视频格式
+    logdebug(@&quot;录制时间为%f 当前时间为%f&quot;,seconds,totalTime);</pre><h2><a name='header-c92' class='md-header-anchor '></a>4.5断点拍摄功能具体使用</h2><p>断点拍摄后的几个小视频可以合成为一个视频, DWShortTool提供了如下接口用于合成视频:</p><pre class='md-fences mock-cm' style='display:block;position:relative'>/* 合成视频|转换视频格式
  @param videosPathArray:合成视频的路径数组
  @param outpath:输出路径
  @param outputFileType:视频格式 如：AVFileTypeQuickTimeMovie  AVFileTypeMPEG4等
@@ -823,7 +823,54 @@ header, .context-menu, .megamenu-content, footer{
  */
 + (void)dw_mergeAndExportVideos:(NSArray *)videosPathArray withOutPath:(NSString *)outpath outputFileType:(NSString *)outputFileType  presetName:(NSString *)presetName  didComplete:(void(^)(NSError *error,NSURL *mergeFileURL) )completeBlock;
 
-使用详情参见demo。</pre><h2><a name='header-c90' class='md-header-anchor '></a>4.6Demo具体使用</h2><p>Demo是示例源码，可直接用Xcode运行。Demo的设计旨在展示SDK各项功能的使用方法，如果希望应用获得更好的使用体验，要根据需求自行更改。
-如果在使用SDK过程中遇到其他问题请联系CC客服进行反馈。</p><h1><a name='header-c94' class='md-header-anchor '></a>5.API查询</h1><p><a href='https://github.com/CCVideo/VOD_iOS_ShortVideo_SDK/blob/master/doc/api'>https://github.com/CCVideo/VOD_iOS_ShortVideo_SDK/tree/master/doc/api</a></p><h1><a name='header-c97' class='md-header-anchor '></a>6.Q&amp;A</h1><p></p></div>
+使用详情参见demo。</pre><h2><a name='header-c96' class='md-header-anchor '></a>4.6工具类DWShortTool开放的其它接口</h2><h3><a name='header-c97' class='md-header-anchor '></a>4.6.1视频压缩</h3><pre class='md-fences mock-cm' style='display:block;position:relative'>/**
+ 压缩视频
+
+ @param videoPath 视频路径
+ @param outPath 输出路径
+ @param outputFileType 视频格式
+ @param presetName 分辨率
+ @param completeBlock 回调的block  compressionFileURL:压缩后的视频URL
+ */
++ (void)dw_compressionAndExportVideo:(NSString *)videoPath withOutPath:(NSString *)outPath outputFileType:(NSString *)outputFileType  presetName:(NSString *)presetName  didComplete:(void(^)(NSError *error,NSURL *compressionFileURL) )completeBlock</pre><h3><a name='header-c99' class='md-header-anchor '></a>4.6.2选取视频时长剪辑</h3><pre class='md-fences mock-cm' style='display:block;position:relative'>/**
+ 视频时长剪辑 视频区域不变
+
+ @param videoPath 视频路径
+ @param outPath 视频输出路径
+ @param outputFileType 视频格式
+ @param presetName 分辨率
+ @param timeRange 截取视频的时间范围
+ @param completeBlock 回调的block  compressionFileURL:剪辑后的视频URL
+ */
++ (void)dw_videoTimeCropAndExportVideo:(NSString *)videoPath withOutPath:(NSString *)outPath outputFileType:(NSString *)outputFileType  presetName:(NSString *)presetName range:(CMTimeRange )timeRange didComplete:(void(^)(NSError *error,NSURL *compressionFileURL) )completeBlock;
+</pre><h3><a name='header-c101' class='md-header-anchor '></a>4.6.3视频区域裁剪</h3><pre class='md-fences mock-cm' style='display:block;position:relative'>/**
+ 视频区域剪裁 视频时长不变
+
+ @param videoPath 视频路径
+ @param outPath 视频输出路径
+ @param outputFileType 视频格式
+ @param presetName 分辨率
+ @param videoSize 剪裁区域
+ @param videoPoint 剪裁起点
+ @param shouldScale 是否拉伸 YES拉伸 NO不拉伸 剪裁黑背景
+ @param completeBlock 剪裁完成后的回调
+ */
++ (void)dw_videoSizeCropAndExportVideo:(NSString *)videoPath withOutPath:(NSString *)outPath outputFileType:(NSString *)outputFileType  presetName:(NSString *)presetName size:(CGSize )videoSize point:(CGPoint )videoPoint shouldScale:(BOOL )shouldScale didComplete:(void(^)(NSError *error,NSURL *compressionFileURL) )completeBlock;
+</pre><h3><a name='header-c103' class='md-header-anchor '></a>4.6.4视频区域兼时长剪裁</h3><pre class='md-fences mock-cm' style='display:block;position:relative'>/**
+ 视频区域兼时长剪裁
+ 
+ @param videoPath 视频路径
+ @param outPath 视频输出路径
+ @param outputFileType 视频格式
+ @param presetName 分辨率
+ @param videoSize 剪裁区域
+ @param videoPoint 剪裁起点
+ @param shouldScale 是否拉伸 YES拉伸 NO不拉伸 剪裁黑背景
+ @param timeRange 截取视频的时间范围
+ @param completeBlock 剪裁完成后的回调
+ */
++ (void)dw_videoSizeAndTimeCropAndExportVideo:(NSString *)videoPath withOutPath:(NSString *)outPath outputFileType:(NSString *)outputFileType  presetName:(NSString *)presetName size:(CGSize )videoSize point:(CGPoint )videoPoint shouldScale:(BOOL )shouldScale range:(CMTimeRange)timeRange didComplete:(void(^)(NSError *error,NSURL *compressionFileURL) )completeBlock;
+</pre><h2><a name='header-c106' class='md-header-anchor '></a>4.7Demo具体使用</h2><p>Demo是示例源码，可直接用Xcode运行。Demo的设计旨在展示SDK各项功能的使用方法，如果希望应用获得更好的使用体验，要根据需求自行更改。
+如果在使用SDK过程中遇到其他问题请联系CC客服进行反馈。</p><p></p><h1><a name='header-c112' class='md-header-anchor '></a>5.API查询</h1><p><a href='https://github.com/CCVideo/VOD_iOS_ShortVideo_SDK/blob/master/doc/api'>https://github.com/CCVideo/VOD_iOS_ShortVideo_SDK/tree/master/doc/api</a></p><h1><a name='header-c115' class='md-header-anchor '></a>6.Q&amp;A</h1><p></p></div>
 </body>
 </html>

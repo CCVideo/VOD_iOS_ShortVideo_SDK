@@ -59,10 +59,6 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     
    
-    
-    
-    
-    
 }
 
 

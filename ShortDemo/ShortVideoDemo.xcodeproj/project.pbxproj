@@ -7,12 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		351E63F320E08710008C1219 /* VideoTimeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 351E63F220E08710008C1219 /* VideoTimeViewController.m */; };
+		351E63F920E0E647008C1219 /* DWDragView.m in Sources */ = {isa = PBXBuildFile; fileRef = 351E63F820E0E647008C1219 /* DWDragView.m */; };
+		35802DA820F465ED00C7D78D /* libShortSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 35802DA620F465ED00C7D78D /* libShortSDK.a */; };
+		35DAA21520E9C4B1009E3306 /* DWImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 35DAA21320E9C4B1009E3306 /* DWImageView.m */; };
+		35DAA22220E9C922009E3306 /* VideoSizeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35DAA22020E9C922009E3306 /* VideoSizeViewController.m */; };
 		35E1BCBE1F8B716200807775 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 35E1BCBD1F8B716200807775 /* Assets.xcassets */; };
 		35E1BCC11F8B716200807775 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 35E1BCBF1F8B716200807775 /* LaunchScreen.storyboard */; };
 		35E1BCC41F8B716200807775 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 35E1BCC31F8B716200807775 /* main.m */; };
 		35E1BCCE1F8B716300807775 /* ShortVideoDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 35E1BCCD1F8B716300807775 /* ShortVideoDemoTests.m */; };
 		35E1BCD91F8B716300807775 /* ShortVideoDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 35E1BCD81F8B716300807775 /* ShortVideoDemoUITests.m */; };
-		35E1BCEB1F8B740E00807775 /* libShortSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 35E1BCE91F8B740E00807775 /* libShortSDK.a */; };
 		35E1BCFE1F8B758100807775 /* DWUploadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35E1BCED1F8B757F00807775 /* DWUploadViewController.m */; };
 		35E1BCFF1F8B758100807775 /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35E1BCF11F8B758000807775 /* FirstViewController.m */; };
 		35E1BD001F8B758100807775 /* DWuploadModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 35E1BCF31F8B758000807775 /* DWuploadModel.m */; };
@@ -46,6 +50,17 @@
 		12180910572D699333274A70 /* Pods-ShortVideoDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShortVideoDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ShortVideoDemo/Pods-ShortVideoDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		23BB44403B7E3BFE044C418C /* libPods-ShortVideoDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ShortVideoDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E8A1C24169A80C51F04CFA6 /* Pods-ShortVideoDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShortVideoDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-ShortVideoDemo/Pods-ShortVideoDemo.release.xcconfig"; sourceTree = "<group>"; };
+		351E63F120E08710008C1219 /* VideoTimeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VideoTimeViewController.h; sourceTree = "<group>"; };
+		351E63F220E08710008C1219 /* VideoTimeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VideoTimeViewController.m; sourceTree = "<group>"; };
+		351E63F720E0E647008C1219 /* DWDragView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DWDragView.h; sourceTree = "<group>"; };
+		351E63F820E0E647008C1219 /* DWDragView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DWDragView.m; sourceTree = "<group>"; };
+		35802DA520F465ED00C7D78D /* DWShortSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DWShortSDK.h; sourceTree = "<group>"; };
+		35802DA620F465ED00C7D78D /* libShortSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libShortSDK.a; sourceTree = "<group>"; };
+		35802DA720F465ED00C7D78D /* DWShortTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DWShortTool.h; sourceTree = "<group>"; };
+		35DAA21320E9C4B1009E3306 /* DWImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DWImageView.m; sourceTree = "<group>"; };
+		35DAA21420E9C4B1009E3306 /* DWImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DWImageView.h; sourceTree = "<group>"; };
+		35DAA22020E9C922009E3306 /* VideoSizeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoSizeViewController.m; sourceTree = "<group>"; };
+		35DAA22120E9C922009E3306 /* VideoSizeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoSizeViewController.h; sourceTree = "<group>"; };
 		35E1BCB11F8B716200807775 /* ShortVideoDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShortVideoDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		35E1BCBD1F8B716200807775 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		35E1BCC01F8B716200807775 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -58,9 +73,6 @@
 		35E1BCD81F8B716300807775 /* ShortVideoDemoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShortVideoDemoUITests.m; sourceTree = "<group>"; };
 		35E1BCDA1F8B716300807775 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		35E1BCE61F8B737100807775 /* ShortVideoDemo-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ShortVideoDemo-Prefix.pch"; sourceTree = "<group>"; };
-		35E1BCE81F8B740E00807775 /* DWShortTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DWShortTool.h; sourceTree = "<group>"; };
-		35E1BCE91F8B740E00807775 /* libShortSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libShortSDK.a; sourceTree = "<group>"; };
-		35E1BCEA1F8B740E00807775 /* DWShortSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DWShortSDK.h; sourceTree = "<group>"; };
 		35E1BCEC1F8B757F00807775 /* DWImageTitleButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DWImageTitleButton.h; sourceTree = "<group>"; };
 		35E1BCED1F8B757F00807775 /* DWUploadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DWUploadViewController.m; sourceTree = "<group>"; };
 		35E1BCEE1F8B757F00807775 /* FirstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirstViewController.h; sourceTree = "<group>"; };
@@ -87,7 +99,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				84832305DF9D6DB8DCF9A6F8 /* libPods-ShortVideoDemo.a in Frameworks */,
-				35E1BCEB1F8B740E00807775 /* libShortSDK.a in Frameworks */,
+				35802DA820F465ED00C7D78D /* libShortSDK.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -116,6 +128,28 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		35B59B9220E5CFCA00E85712 /* VideoTime */ = {
+			isa = PBXGroup;
+			children = (
+				351E63F120E08710008C1219 /* VideoTimeViewController.h */,
+				351E63F220E08710008C1219 /* VideoTimeViewController.m */,
+				351E63F720E0E647008C1219 /* DWDragView.h */,
+				351E63F820E0E647008C1219 /* DWDragView.m */,
+			);
+			path = VideoTime;
+			sourceTree = "<group>";
+		};
+		35B59B9320E5CFF800E85712 /* VideoSize */ = {
+			isa = PBXGroup;
+			children = (
+				35DAA21420E9C4B1009E3306 /* DWImageView.h */,
+				35DAA21320E9C4B1009E3306 /* DWImageView.m */,
+				35DAA22120E9C922009E3306 /* VideoSizeViewController.h */,
+				35DAA22020E9C922009E3306 /* VideoSizeViewController.m */,
+			);
+			path = VideoSize;
+			sourceTree = "<group>";
+		};
 		35E1BCA81F8B716200807775 = {
 			isa = PBXGroup;
 			children = (
@@ -141,6 +175,8 @@
 		35E1BCB31F8B716200807775 /* ShortVideoDemo */ = {
 			isa = PBXGroup;
 			children = (
+				35B59B9320E5CFF800E85712 /* VideoSize */,
+				35B59B9220E5CFCA00E85712 /* VideoTime */,
 				35E1BCFA1F8B758100807775 /* AppDelegate.h */,
 				35E1BCF81F8B758000807775 /* AppDelegate.m */,
 				35E1BCEC1F8B757F00807775 /* DWImageTitleButton.h */,
@@ -190,9 +226,9 @@
 		35E1BCE71F8B73D100807775 /* ShortSDK */ = {
 			isa = PBXGroup;
 			children = (
-				35E1BCEA1F8B740E00807775 /* DWShortSDK.h */,
-				35E1BCE81F8B740E00807775 /* DWShortTool.h */,
-				35E1BCE91F8B740E00807775 /* libShortSDK.a */,
+				35802DA520F465ED00C7D78D /* DWShortSDK.h */,
+				35802DA720F465ED00C7D78D /* DWShortTool.h */,
+				35802DA620F465ED00C7D78D /* libShortSDK.a */,
 			);
 			path = ShortSDK;
 			sourceTree = "<group>";
@@ -402,13 +438,17 @@
 				35E1BD051F8B758100807775 /* ShortEditViewController.m in Sources */,
 				35E1BCFE1F8B758100807775 /* DWUploadViewController.m in Sources */,
 				35E1BD011F8B758100807775 /* DWImageTitleButton.m in Sources */,
+				35DAA22220E9C922009E3306 /* VideoSizeViewController.m in Sources */,
 				35E1BD021F8B758100807775 /* DWUploadInfoSetupViewController.m in Sources */,
 				35E1BCFF1F8B758100807775 /* FirstViewController.m in Sources */,
 				35E1BD061F8B758100807775 /* ShortVideoViewController.m in Sources */,
 				35E1BCC41F8B716200807775 /* main.m in Sources */,
+				35DAA21520E9C4B1009E3306 /* DWImageView.m in Sources */,
 				35E1BD041F8B758100807775 /* DWUploadTableViewCell.m in Sources */,
+				351E63F320E08710008C1219 /* VideoTimeViewController.m in Sources */,
 				35E1BD001F8B758100807775 /* DWuploadModel.m in Sources */,
 				35E1BD031F8B758100807775 /* AppDelegate.m in Sources */,
+				351E63F920E0E647008C1219 /* DWDragView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

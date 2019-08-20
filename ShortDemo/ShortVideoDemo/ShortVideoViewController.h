@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+extern NSString *const shortVideo;
+
 @interface ShortVideoViewController : UIViewController
 
 @end
