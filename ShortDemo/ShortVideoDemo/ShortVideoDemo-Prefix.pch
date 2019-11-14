@@ -19,18 +19,17 @@
 
 #endif
 
-
-
-
 #define ScreenWidth  [UIScreen mainScreen].bounds.size.width
 #define ScreenHeight [UIScreen mainScreen].bounds.size.height
 
 #define SCREEN_WIDTH [UIScreen mainScreen].bounds.size.width
 #define SCREEN_HEIGHT [UIScreen mainScreen].bounds.size.height
 
-// 账户信息
-#define DWACCOUNT_USERID @""
-#define DWACCOUNT_APIKEY @""
+#define SHORTVIDEO @"ShortVideo"
+
+#define PRESETNAME              AVAssetExportPreset960x540
+
+#define OUTPUTFILETYPE              AVFileTypeMPEG4
 
 //弱引用
 #define WeakSelf(type)  __weak typeof(type) weak##type = type
@@ -40,14 +39,15 @@
 
 
 
-
-
+#import <UIKit/UIKit.h>
+#import "GPUImage.h"
 #import "MJExtension.h"
 #import "MBProgressHUD.h"
 #import "DWShortTool.h"
 #import "Masonry.h"
-
-
+#import "DWControl.h"
+#import "ObjectExtension.h"
+#import "ICGVideoTrimmer.h"
 
 // Include any system framework and library headers here that should be included in all compilation units.
 // You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.

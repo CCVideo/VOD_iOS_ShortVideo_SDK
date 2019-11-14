@@ -7,9 +7,8 @@
 //
 
 #import "AppDelegate.h"
-#import "FirstViewController.h"
-
-#define DWUploadItemPlistFilename @"uploadItems.plist"
+#import "DWShortShootingViewController.h"
+#import <Photos/Photos.h>
 
 @interface AppDelegate ()
 
@@ -23,13 +22,21 @@
     self.window =[[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor whiteColor];
     
-    UINavigationController *nav =[[UINavigationController alloc]initWithRootViewController:[[FirstViewController alloc]init]];
+    [UIApplication sharedApplication].statusBarHidden = YES;
+
+    UINavigationController *nav =[[UINavigationController alloc]initWithRootViewController:[[DWShortShootingViewController alloc]init]];
+    nav.navigationBar.hidden = YES;
+    
+    if (@available(iOS 13, *)) {
+        if ([PHPhotoLibrary authorizationStatus] == PHAuthorizationStatusNotDetermined) {
+                  [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
+
+           }];
+        }
+    }
     
     self.window.rootViewController = nav;
     [self.window makeKeyAndVisible];
-    
-    
-    
     
     // Override point for customization after application launch.
     return YES;

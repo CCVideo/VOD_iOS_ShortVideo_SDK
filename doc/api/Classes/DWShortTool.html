@@ -14,11 +14,11 @@
 		<div class="container" class="hide-in-xcode">
 			
 			<h1 id="library-title">
-				<a href="../index.html">ShortSDK </a>
+				<a href="../index.html">bokecc </a>
 			</h1>
 
 			<p id="developer-home">
-				<a href="../index.html">bokecc.com</a>
+				<a href="../index.html">com.bokecc</a>
 			</p>
 			
 		</div>
@@ -56,13 +56,35 @@
 	
 	<optgroup label="Class Methods">
 		
+		<option value="//api/name/dw_addStickerAndExportVideo:withStickerImage:stickerImagePoint:stickerImageSize:rotateAngle:timeRange:outPath:outputFileType:presetName:didComplete:">+ dw_addStickerAndExportVideo:withStickerImage:stickerImagePoint:stickerImageSize:rotateAngle:timeRange:outPath:outputFileType:presetName:didComplete:</option>
+		
+		<option value="//api/name/dw_addStickerAndExportVideo:withStickerImages:stickerImagePoints:stickerImageSizes:rotateAngles:timeRanges:outPath:outputFileType:presetName:didComplete:">+ dw_addStickerAndExportVideo:withStickerImages:stickerImagePoints:stickerImageSizes:rotateAngles:timeRanges:outPath:outputFileType:presetName:didComplete:</option>
+		
+		<option value="//api/name/dw_colorWithHexString:">+ dw_colorWithHexString:</option>
+		
+		<option value="//api/name/dw_compositeAndExportVideos:withVideoSize:outPath:outputFileType:presetName:didComplete:">+ dw_compositeAndExportVideos:withVideoSize:outPath:outputFileType:presetName:didComplete:</option>
+		
 		<option value="//api/name/dw_compressionAndExportVideo:withOutPath:outputFileType:presetName:didComplete:">+ dw_compressionAndExportVideo:withOutPath:outputFileType:presetName:didComplete:</option>
 		
+		<option value="//api/name/dw_deleteFileWithFilePath:">+ dw_deleteFileWithFilePath:</option>
+		
+		<option value="//api/name/dw_fileSizeAtPath:">+ dw_fileSizeAtPath:</option>
+		
+		<option value="//api/name/dw_getThumbnailImage:time:">+ dw_getThumbnailImage:time:</option>
+		
+		<option value="//api/name/dw_insertAudioAndExportVideo:withAudioPath:originalVolume:insertVolume:timeRange:outPath:outputFileType:presetName:didComplete:">+ dw_insertAudioAndExportVideo:withAudioPath:originalVolume:insertVolume:timeRange:outPath:outputFileType:presetName:didComplete:</option>
+		
+		<option value="//api/name/dw_videoSizeAndTimeCropAndExportVideo:size:point:range:videoRate:withOutPath:outputFileType:presetName:didComplete:">+ dw_videoSizeAndTimeCropAndExportVideo:size:point:range:videoRate:withOutPath:outputFileType:presetName:didComplete:</option>
+		
 		<option value="//api/name/dw_videoSizeAndTimeCropAndExportVideo:withOutPath:outputFileType:presetName:size:point:shouldScale:range:didComplete:">+ dw_videoSizeAndTimeCropAndExportVideo:withOutPath:outputFileType:presetName:size:point:shouldScale:range:didComplete:</option>
+		
+		<option value="//api/name/dw_videoSizeChangeRenderAndExportVideo:videoSize:withOutPath:outputFileType:presetName:didComplete:">+ dw_videoSizeChangeRenderAndExportVideo:videoSize:withOutPath:outputFileType:presetName:didComplete:</option>
 		
 		<option value="//api/name/dw_videoSizeCropAndExportVideo:withOutPath:outputFileType:presetName:size:point:shouldScale:didComplete:">+ dw_videoSizeCropAndExportVideo:withOutPath:outputFileType:presetName:size:point:shouldScale:didComplete:</option>
 		
 		<option value="//api/name/dw_videoTimeCropAndExportVideo:withOutPath:outputFileType:presetName:range:didComplete:">+ dw_videoTimeCropAndExportVideo:withOutPath:outputFileType:presetName:range:didComplete:</option>
+		
+		<option value="//api/name/isVideoAssetverticalFromAffineTransform:">+ isVideoAssetverticalFromAffineTransform:</option>
 		
 	</optgroup>
 	
@@ -104,10 +126,247 @@
 						
 
 						
-						
+						<h2 class="task-title">Other Methods</h2>
 
 						<div class="task-list">
 							<div class="section-method">
+	<a name="//api/name/dw_getThumbnailImage:time:" title="dw_getThumbnailImage:time:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/dw_getThumbnailImage:time:">+&nbsp;dw_getThumbnailImage:time:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>取得缩略图</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>+ (UIImage *)dw_getThumbnailImage:(NSString *)<em>videoPath</em> time:(NSTimeInterval)<em>time</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>videoPath</code></th>
+						<td><p>文件路径</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>time</code></th>
+						<td><p>第几秒的缩略图</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>取得缩略图</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">DWShortTool.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/dw_colorWithHexString:" title="dw_colorWithHexString:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/dw_colorWithHexString:">+&nbsp;dw_colorWithHexString:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>十六进制色彩</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>+ (UIColor *)dw_colorWithHexString:(NSString *)<em>string</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>string</code></th>
+						<td><p>色值</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>十六进制色彩</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">DWShortTool.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/dw_deleteFileWithFilePath:" title="dw_deleteFileWithFilePath:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/dw_deleteFileWithFilePath:">+&nbsp;dw_deleteFileWithFilePath:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>删除文件</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>+ (BOOL)dw_deleteFileWithFilePath:(NSString *)<em>filePath</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>filePath</code></th>
+						<td><p>文件路径 并返回是否成功</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>删除文件</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">DWShortTool.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/dw_fileSizeAtPath:" title="dw_fileSizeAtPath:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/dw_fileSizeAtPath:">+&nbsp;dw_fileSizeAtPath:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>获取文件大小</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>+ (CGFloat)dw_fileSizeAtPath:(NSString *)<em>filePath</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>filePath</code></th>
+						<td><p>文件路径</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>获取文件大小</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">DWShortTool.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
 	<a name="//api/name/dw_compressionAndExportVideo:withOutPath:outputFileType:presetName:didComplete:" title="dw_compressionAndExportVideo:withOutPath:outputFileType:presetName:didComplete:"></a>
 	<h3 class="method-title"><code><a href="#//api/name/dw_compressionAndExportVideo:withOutPath:outputFileType:presetName:didComplete:">+&nbsp;dw_compressionAndExportVideo:withOutPath:outputFileType:presetName:didComplete:</a></code>
 </h3>
@@ -149,12 +408,12 @@
 				
 					<tr>
 						<th scope="row" class="argument-name"><code>presetName</code></th>
-						<td><p>分辨率</p></td>
+						<td><p>视频导出质量</p></td>
 					</tr>
 				
 					<tr>
 						<th scope="row" class="argument-name"><code>completeBlock</code></th>
-						<td><p>回调的block  compressionFileURL:压缩后的视频URL</p></td>
+						<td><p>完成后回调</p></td>
 					</tr>
 				
 				</table>
@@ -227,7 +486,7 @@
 				
 					<tr>
 						<th scope="row" class="argument-name"><code>presetName</code></th>
-						<td><p>分辨率</p></td>
+						<td><p>视频导出质量</p></td>
 					</tr>
 				
 					<tr>
@@ -237,7 +496,7 @@
 				
 					<tr>
 						<th scope="row" class="argument-name"><code>completeBlock</code></th>
-						<td><p>回调的block  compressionFileURL:剪辑后的视频URL</p></td>
+						<td><p>完成后回调</p></td>
 					</tr>
 				
 				</table>
@@ -310,7 +569,7 @@
 				
 					<tr>
 						<th scope="row" class="argument-name"><code>presetName</code></th>
-						<td><p>分辨率</p></td>
+						<td><p>视频导出质量</p></td>
 					</tr>
 				
 					<tr>
@@ -403,7 +662,7 @@
 				
 					<tr>
 						<th scope="row" class="argument-name"><code>presetName</code></th>
-						<td><p>分辨率</p></td>
+						<td><p>视频导出质量</p></td>
 					</tr>
 				
 					<tr>
@@ -459,6 +718,628 @@
 			
 		</div>
 	</div>
+</div><div class="section-method">
+	<a name="//api/name/dw_videoSizeAndTimeCropAndExportVideo:size:point:range:videoRate:withOutPath:outputFileType:presetName:didComplete:" title="dw_videoSizeAndTimeCropAndExportVideo:size:point:range:videoRate:withOutPath:outputFileType:presetName:didComplete:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/dw_videoSizeAndTimeCropAndExportVideo:size:point:range:videoRate:withOutPath:outputFileType:presetName:didComplete:">+&nbsp;dw_videoSizeAndTimeCropAndExportVideo:size:point:range:videoRate:withOutPath:outputFileType:presetName:didComplete:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>视频区域，时长，倍速剪裁</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>+ (void)dw_videoSizeAndTimeCropAndExportVideo:(NSString *)<em>videoPath</em> size:(CGSize)<em>videoSize</em> point:(CGPoint)<em>videoPoint</em> range:(CMTimeRange)<em>timeRange</em> videoRate:(CGFloat)<em>videoRate</em> withOutPath:(NSString *)<em>outPath</em> outputFileType:(NSString *)<em>outputFileType</em> presetName:(NSString *)<em>presetName</em> didComplete:(void ( ^ ) ( NSError *error , NSURL *compressionFileURL ))<em>completeBlock</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>videoPath</code></th>
+						<td><p>视频路径</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>videoSize</code></th>
+						<td><p>剪裁区域，CGSizeZero不裁剪</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>videoPoint</code></th>
+						<td><p>剪裁起点</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>timeRange</code></th>
+						<td><p>截取视频的时间范围，kCMTimeRangeZero，不裁剪时长</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>videoRate</code></th>
+						<td><p>截取视频倍速</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>outPath</code></th>
+						<td><p>视频输出路径</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>outputFileType</code></th>
+						<td><p>视频格式</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>presetName</code></th>
+						<td><p>视频导出质量</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>completeBlock</code></th>
+						<td><p>完成后的回调</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>视频区域，时长，倍速剪裁</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">DWShortTool.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/dw_addStickerAndExportVideo:withStickerImage:stickerImagePoint:stickerImageSize:rotateAngle:timeRange:outPath:outputFileType:presetName:didComplete:" title="dw_addStickerAndExportVideo:withStickerImage:stickerImagePoint:stickerImageSize:rotateAngle:timeRange:outPath:outputFileType:presetName:didComplete:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/dw_addStickerAndExportVideo:withStickerImage:stickerImagePoint:stickerImageSize:rotateAngle:timeRange:outPath:outputFileType:presetName:didComplete:">+&nbsp;dw_addStickerAndExportVideo:withStickerImage:stickerImagePoint:stickerImageSize:rotateAngle:timeRange:outPath:outputFileType:presetName:didComplete:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>添加单个视频水印</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>+ (void)dw_addStickerAndExportVideo:(NSString *)<em>videoPath</em> withStickerImage:(UIImage *)<em>stickerImage</em> stickerImagePoint:(CGPoint)<em>stickerImagePoint</em> stickerImageSize:(CGSize)<em>stickerImageSize</em> rotateAngle:(CGFloat)<em>rotateAngle</em> timeRange:(CMTimeRange)<em>timeRange</em> outPath:(NSString *)<em>outPath</em> outputFileType:(NSString *)<em>outputFileType</em> presetName:(NSString *)<em>presetName</em> didComplete:(void ( ^ ) ( NSError *error , NSURL *compressionFileURL ))<em>completeBlock</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>videoPath</code></th>
+						<td><p>视频路径</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>stickerImage</code></th>
+						<td><p>水印图片</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>stickerImagePoint</code></th>
+						<td><p>水印位置，point为水印所占视频位置的百分比。eg:CGPointMake(0.1, 0.1)</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>stickerImageSize</code></th>
+						<td><p>水印大小，为水印所占视频大小的百分比。eg:CGSizeMake(0.4, 0.4)</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>rotateAngle</code></th>
+						<td><p>水印旋转弧度。eg:M_PI_2</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>timeRange</code></th>
+						<td><p>添加水印的时间范围，kCMTimeRangeZero时，全部时长都添加水印</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>outPath</code></th>
+						<td><p>视频输出路径</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>outputFileType</code></th>
+						<td><p>视频格式</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>presetName</code></th>
+						<td><p>视频导出质量</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>completeBlock</code></th>
+						<td><p>完成后的回调</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>添加单个视频水印</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">DWShortTool.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/dw_addStickerAndExportVideo:withStickerImages:stickerImagePoints:stickerImageSizes:rotateAngles:timeRanges:outPath:outputFileType:presetName:didComplete:" title="dw_addStickerAndExportVideo:withStickerImages:stickerImagePoints:stickerImageSizes:rotateAngles:timeRanges:outPath:outputFileType:presetName:didComplete:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/dw_addStickerAndExportVideo:withStickerImages:stickerImagePoints:stickerImageSizes:rotateAngles:timeRanges:outPath:outputFileType:presetName:didComplete:">+&nbsp;dw_addStickerAndExportVideo:withStickerImages:stickerImagePoints:stickerImageSizes:rotateAngles:timeRanges:outPath:outputFileType:presetName:didComplete:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>批量添加视频水印</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>+ (void)dw_addStickerAndExportVideo:(NSString *)<em>videoPath</em> withStickerImages:(NSArray&lt;UIImage*&gt; *)<em>stickerImages</em> stickerImagePoints:(NSArray&lt;NSValue*&gt; *)<em>stickerImagePoints</em> stickerImageSizes:(NSArray&lt;NSValue*&gt; *)<em>stickerImageSizes</em> rotateAngles:(NSArray&lt;NSNumber*&gt; *)<em>rotateAngles</em> timeRanges:(NSArray&lt;NSValue*&gt; *)<em>timeRanges</em> outPath:(NSString *)<em>outPath</em> outputFileType:(NSString *)<em>outputFileType</em> presetName:(NSString *)<em>presetName</em> didComplete:(void ( ^ ) ( NSError *error , NSURL *compressionFileURL ))<em>completeBlock</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>videoPath</code></th>
+						<td><p>视频路径</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>stickerImages</code></th>
+						<td><p>水印图片数组</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>stickerImagePoints</code></th>
+						<td><p>水印位置数组，points为水印所占视频位置的百分比数组。eg:@[[NSValue valueWithCGPoint:CGPointMake(0.1, 0.1)]]</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>stickerImageSizes</code></th>
+						<td><p>水印大小数组，sizes为水印所占视频大小的百分比数组。eg:@[[NSValue valueWithCGPoint:CGSizeMake(0.4, 0.4)]]</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>rotateAngles</code></th>
+						<td><p>水印旋转弧度数据。eg:[NSNumber numberWithFloat:M_PI_2]</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>timeRanges</code></th>
+						<td><p>添加水印的时间范围数组，kCMTimeRangeZero时，全部时长都添加水印</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>outPath</code></th>
+						<td><p>视频输出路径</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>outputFileType</code></th>
+						<td><p>视频格式</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>presetName</code></th>
+						<td><p>视频导出质量</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>completeBlock</code></th>
+						<td><p>完成后的回调</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>批量添加视频水印</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">DWShortTool.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/dw_compositeAndExportVideos:withVideoSize:outPath:outputFileType:presetName:didComplete:" title="dw_compositeAndExportVideos:withVideoSize:outPath:outputFileType:presetName:didComplete:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/dw_compositeAndExportVideos:withVideoSize:outPath:outputFileType:presetName:didComplete:">+&nbsp;dw_compositeAndExportVideos:withVideoSize:outPath:outputFileType:presetName:didComplete:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>多视频合成</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>+ (void)dw_compositeAndExportVideos:(NSArray&lt;NSString*&gt; *)<em>videosPath</em> withVideoSize:(CGSize)<em>videoSize</em> outPath:(NSString *)<em>outPath</em> outputFileType:(NSString *)<em>outputFileType</em> presetName:(NSString *)<em>presetName</em> didComplete:(void ( ^ ) ( NSError *error , NSURL *compressionFileURL ))<em>completeBlock</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>videosPath</code></th>
+						<td><p>视频路径数组</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>videoSize</code></th>
+						<td><p>合成视频尺寸，不设置（CGRectZero）默认取第一个视频大小为基准</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>outPath</code></th>
+						<td><p>输出路径</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>outputFileType</code></th>
+						<td><p>视频格式</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>presetName</code></th>
+						<td><p>视频导出质量</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>completeBlock</code></th>
+						<td><p>完成后的回调</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>多视频合成</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">DWShortTool.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/dw_insertAudioAndExportVideo:withAudioPath:originalVolume:insertVolume:timeRange:outPath:outputFileType:presetName:didComplete:" title="dw_insertAudioAndExportVideo:withAudioPath:originalVolume:insertVolume:timeRange:outPath:outputFileType:presetName:didComplete:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/dw_insertAudioAndExportVideo:withAudioPath:originalVolume:insertVolume:timeRange:outPath:outputFileType:presetName:didComplete:">+&nbsp;dw_insertAudioAndExportVideo:withAudioPath:originalVolume:insertVolume:timeRange:outPath:outputFileType:presetName:didComplete:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>插入音频</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>+ (void)dw_insertAudioAndExportVideo:(NSString *)<em>videoPath</em> withAudioPath:(NSString *)<em>audioPath</em> originalVolume:(CGFloat)<em>originalVolume</em> insertVolume:(CGFloat)<em>insertVolume</em> timeRange:(CMTimeRange)<em>timeRange</em> outPath:(NSString *)<em>outPath</em> outputFileType:(NSString *)<em>outputFileType</em> presetName:(NSString *)<em>presetName</em> didComplete:(void ( ^ ) ( NSError *error , NSURL *compressionFileURL ))<em>completeBlock</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>videoPath</code></th>
+						<td><p>视频路径</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>audioPath</code></th>
+						<td><p>待插入音频路径</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>originalVolume</code></th>
+						<td><p>原音频音量</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>insertVolume</code></th>
+						<td><p>插入音频音量</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>timeRange</code></th>
+						<td><p>插入音频范围，kCMTimeRangeZero时，从0开始添加</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>outPath</code></th>
+						<td><p>视频输出路径</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>outputFileType</code></th>
+						<td><p>视频格式</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>presetName</code></th>
+						<td><p>视频导出质量</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>completeBlock</code></th>
+						<td><p>完成后的回调</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>插入音频</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">DWShortTool.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/dw_videoSizeChangeRenderAndExportVideo:videoSize:withOutPath:outputFileType:presetName:didComplete:" title="dw_videoSizeChangeRenderAndExportVideo:videoSize:withOutPath:outputFileType:presetName:didComplete:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/dw_videoSizeChangeRenderAndExportVideo:videoSize:withOutPath:outputFileType:presetName:didComplete:">+&nbsp;dw_videoSizeChangeRenderAndExportVideo:videoSize:withOutPath:outputFileType:presetName:didComplete:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>修改视频分辨率</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>+ (void)dw_videoSizeChangeRenderAndExportVideo:(NSString *)<em>videoPath</em> videoSize:(CGSize)<em>videoSize</em> withOutPath:(NSString *)<em>outPath</em> outputFileType:(NSString *)<em>outputFileType</em> presetName:(NSString *)<em>presetName</em> didComplete:(void ( ^ ) ( NSError *error , NSURL *compressionFileURL ))<em>completeBlock</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>videoPath</code></th>
+						<td><p>视频路径</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>videoSize</code></th>
+						<td><p>要输出的视频分辨率</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>outPath</code></th>
+						<td><p>视频输出路径</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>outputFileType</code></th>
+						<td><p>视频格式</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>presetName</code></th>
+						<td><p>视频导出质量</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>completeBlock</code></th>
+						<td><p>完成后的回调</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>修改视频分辨率</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">DWShortTool.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div>
+						</div>
+						
+
+						
+						<h2 class="task-title">Other Methods</h2>
+
+						<div class="task-list">
+							<div class="section-method">
+	<a name="//api/name/isVideoAssetverticalFromAffineTransform:" title="isVideoAssetverticalFromAffineTransform:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/isVideoAssetverticalFromAffineTransform:">+&nbsp;isVideoAssetverticalFromAffineTransform:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>视频是否旋转</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>+ (BOOL)isVideoAssetverticalFromAffineTransform:(CGAffineTransform)<em>videoTransform</em></code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>视频是否旋转</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">DWShortTool.m</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
 </div>
 						</div>
 						
@@ -474,7 +1355,7 @@
 				<footer>
 					<div class="footer-copyright">
 						
-						<p class="copyright">Copyright &copy; 2018 bokecc.com. All rights reserved. Updated: 2018-07-10</p>
+						<p class="copyright">Copyright &copy; 2019 com.bokecc. All rights reserved. Updated: 2019-11-14</p>
 						
 						
 						<p class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2.1 (build 1334)</a>.</p>
