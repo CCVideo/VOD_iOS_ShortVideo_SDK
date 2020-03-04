@@ -258,10 +258,26 @@
             [weakSelf.cropView seekToTime:CMTimeGetSeconds(time)];
         }
         
-        if (CMTimeGetSeconds(time) == CMTimeGetSeconds(weakSelf.player.currentItem.duration)) {
-            [weakSelf.player seekToTime:kCMTimeZero];
-            [weakSelf.player play];
+        //修改拖拽时间
+        if (CMTimeCompare(weakSelf.cropView.duration, kCMTimeZero) == 0) {
+            //未拖拽
+            if (CMTimeCompare(time, weakSelf.player.currentItem.duration) == 0) {
+                [weakSelf.player seekToTime:weakSelf.cropView.start];
+            }
+        }else{
+            //已拖拽
+            CMTime currentPlayTime = CMTimeAdd(weakSelf.cropView.start,weakSelf.cropView.duration);
+            if (CMTimeCompare(time, currentPlayTime) >= 0) {
+                [weakSelf.player seekToTime:weakSelf.cropView.start];
+            }
         }
+        
+        [weakSelf.player play];
+
+//        if (CMTimeGetSeconds(time) == CMTimeGetSeconds(weakSelf.player.currentItem.duration)) {
+//            [weakSelf.player seekToTime:kCMTimeZero];
+//            [weakSelf.player play];
+//        }
     }];
     [self.player.currentItem addObserver:self
                               forKeyPath:@"status"

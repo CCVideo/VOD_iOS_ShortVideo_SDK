@@ -481,7 +481,13 @@ static CGFloat BUBBLEWIDTH = 180;
     
     [lastFilter addTarget:self.writeMovieWriter];
     
-    self.writeMovieFile.audioEncodingTarget = self.writeMovieWriter;
+    AVAsset * videoAsset = [AVAsset assetWithURL:videoUrl];
+    if ([[videoAsset tracksWithMediaType:AVMediaTypeAudio] count] > 0) {
+        self.writeMovieFile.audioEncodingTarget = self.writeMovieWriter;
+    }else{
+        self.writeMovieFile.audioEncodingTarget = nil;
+    }
+
     [self.writeMovieFile enableSynchronizedEncodingUsingMovieWriter:self.writeMovieWriter];
     
     [self.writeMovieWriter startRecording];
@@ -1500,9 +1506,9 @@ static CGFloat BUBBLEWIDTH = 180;
 -(CGFloat)notchBottom
 {
     if (@available(iOS 11.0, *)) {
-           return [[UIApplication sharedApplication] delegate].window.safeAreaInsets.bottom > 0 ? 34 : 0;
-       }
-       return 0;
+        return [[UIApplication sharedApplication] delegate].window.safeAreaInsets.bottom > 0 ? 34 : 0;
+    }
+    return 0;
 }
 
 -(NSMutableArray *)stickerArray

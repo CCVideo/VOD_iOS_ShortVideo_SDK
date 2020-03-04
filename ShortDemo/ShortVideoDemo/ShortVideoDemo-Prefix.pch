@@ -48,6 +48,7 @@
 #import "DWControl.h"
 #import "ObjectExtension.h"
 #import "ICGVideoTrimmer.h"
+#import <Photos/Photos.h>
 
 // Include any system framework and library headers here that should be included in all compilation units.
 // You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.

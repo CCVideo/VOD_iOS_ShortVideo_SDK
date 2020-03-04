@@ -15,6 +15,7 @@
 #import "DWShortVideoEditViewController.h"
 #import "DWGPUImageBrightnessFilter.h"
 #import "DWShortVideoCropViewController.h"
+#import "DWShortImagePickerViewController.h"
 
 @interface DWShortShootingViewController ()<DWShootingBottomViewDelegate,DWBeautyViewDelegate,DWFilterViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 
@@ -107,7 +108,7 @@ static const CGFloat VIEWHEIGHT = 5;
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-        
+            
     self.isDelay = NO;
     self.scale = 0;
     self.isRecording = NO;
@@ -491,25 +492,25 @@ static const CGFloat VIEWHEIGHT = 5;
     return isSuccess;
 }
 
--(BOOL)isVerifyVideoWithUrl:(NSURL *)videoURL
-{
-    //验证视频是否合法、
-    //小于3分钟，大小小于100MB的视频
-    NSFileManager * fileManager = [NSFileManager defaultManager];
-    NSDictionary * fileAttr = [fileManager attributesOfItemAtPath:videoURL.absoluteString error:nil];
-    NSInteger fileSize = (NSInteger)[[fileAttr objectForKey:NSFileSize] longLongValue];
-    if (fileSize > 100 * 1024 * 1024) {
-        return NO;
-    }
-    
-    AVAsset * asset = [AVAsset assetWithURL:videoURL];
-    CGFloat duration = asset.duration.value / asset.duration.timescale;
-    if (duration > 180) {
-        return NO;
-    }
-    
-    return YES;
-}
+//-(BOOL)isVerifyVideoWithUrl:(NSURL *)videoURL
+//{
+//    //验证视频是否合法、
+//    //小于3分钟，大小小于100MB的视频
+//    NSFileManager * fileManager = [NSFileManager defaultManager];
+//    NSDictionary * fileAttr = [fileManager attributesOfItemAtPath:videoURL.absoluteString error:nil];
+//    NSInteger fileSize = (NSInteger)[[fileAttr objectForKey:NSFileSize] longLongValue];
+//    if (fileSize > 100 * 1024 * 1024) {
+//        return NO;
+//    }
+//
+//    AVAsset * asset = [AVAsset assetWithURL:videoURL];
+//    CGFloat duration = asset.duration.value / asset.duration.timescale;
+//    if (duration > 180) {
+//        return NO;
+//    }
+//
+//    return YES;
+//}
 
 #pragma mark - DWShootingBottomViewDelegate
 //录制
@@ -563,12 +564,8 @@ static const CGFloat VIEWHEIGHT = 5;
 //上传
 -(void)DWShootingBottomViewUploadButtonAction
 {
-    UIImagePickerController * pickerController = [[UIImagePickerController alloc]init];
-    pickerController.mediaTypes = @[@"public.movie"];
-    pickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    pickerController.delegate = self;
-    pickerController.modalPresentationStyle = UIModalPresentationFullScreen;
-    [self presentViewController:pickerController animated:YES completion:nil];
+    DWShortImagePickerViewController * imagePickerViewController = [[DWShortImagePickerViewController alloc]init];
+    [self presentViewController:imagePickerViewController animated:YES completion:nil];
 }
 
 //完成
@@ -649,6 +646,7 @@ static const CGFloat VIEWHEIGHT = 5;
 
 }
 
+/*
 #pragma mark - UINavigationControllerDelegate
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<UIImagePickerControllerInfoKey,id> *)info
 {
@@ -698,6 +696,7 @@ static const CGFloat VIEWHEIGHT = 5;
     }];
     
 }
+ */
 
 #pragma mark - DWBeautyViewDelegate
 //美白滤镜调整
