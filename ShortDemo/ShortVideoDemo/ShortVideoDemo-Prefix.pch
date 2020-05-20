@@ -31,6 +31,8 @@
 
 #define OUTPUTFILETYPE              AVFileTypeMPEG4
 
+//#define DWANIMATIONTYPE            @"DWAnimationType"
+
 //弱引用
 #define WeakSelf(type)  __weak typeof(type) weak##type = type
 
@@ -40,7 +42,6 @@
 
 
 #import <UIKit/UIKit.h>
-#import "GPUImage.h"
 #import "MJExtension.h"
 #import "MBProgressHUD.h"
 #import "DWShortTool.h"
@@ -49,6 +50,12 @@
 #import "ObjectExtension.h"
 #import "ICGVideoTrimmer.h"
 #import <Photos/Photos.h>
+#import "GPUImage.h"
+#import "DWGPUImageShakeFilter.h"
+#import "DWGPUImageFlashFilter.h"
+#import "DWGPUImageSoulOutFilter.h"
+#import "DWGPUImageVertigoFilter.h"
+#import "DWGPUImageScaleFilter.h"
 
 // Include any system framework and library headers here that should be included in all compilation units.
 // You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.

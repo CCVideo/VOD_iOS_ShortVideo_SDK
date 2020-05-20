@@ -10,4 +10,4 @@
 #import "DWShortTool.h"
 
 
-#define DWShortSDK_VERSION @"iOS_2.3.0"
+#define DWShortSDK_VERSION @"iOS_2.4.0"

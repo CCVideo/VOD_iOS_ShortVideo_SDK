@@ -19,11 +19,12 @@
 #import "LINConversionView.h"
 #import "DWVideoTrimmerView.h"
 #import "DWShortEditAndUploadViewController.h"
+#import "DWVideoEffectsView.h"
 
 static CGFloat STICKEWIDTH = 180;
 static CGFloat BUBBLEWIDTH = 180;
 
-@interface DWShortVideoEditViewController ()<DWEditBeautyViewDelegate,DWEditFilterViewDelegate,DWInsertMusicViewDelegate,DWStickerViewDelegate,DWBubbleViewDelegate,LINConversionViewDelegate,DWVideoTrimmerViewDelegate>
+@interface DWShortVideoEditViewController ()<DWEditBeautyViewDelegate,DWEditFilterViewDelegate,DWInsertMusicViewDelegate,DWStickerViewDelegate,DWBubbleViewDelegate,LINConversionViewDelegate,DWVideoTrimmerViewDelegate,DWVideoEffectsViewDelegate>
 
 @property(nonatomic,assign)CGFloat notchTop;
 @property(nonatomic,assign)CGFloat notchBottom;
@@ -63,6 +64,10 @@ static CGFloat BUBBLEWIDTH = 180;
 
 @property(nonatomic,strong)DWBubbleView * bubbleView;//气泡文字
 @property(nonatomic,strong)NSMutableArray * bubbleArray;//气泡文字数据
+
+@property(nonatomic,strong)DWVideoEffectsView * effectsView;//视频特效
+@property(nonatomic,strong)NSMutableArray * effectsArray;//视频特效数据
+@property(nonatomic,strong)GPUImageFilter * effectShowFilter;//当前展示特效
 
 @property(nonatomic,strong)DWShortEditAndUploadViewController * editAndUploadVC;
 
@@ -121,6 +126,48 @@ static CGFloat BUBBLEWIDTH = 180;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
 }
 
+-(void)play
+{
+    if (self.aleardyPresent) {
+        return;
+    }
+    
+    if (self.isPlaying) {
+        return;
+    }
+    
+    [self.movieFile startProcessing];
+    
+    [self startTimer];
+    
+    [self.player play];
+    
+    self.isPlaying = YES;
+    
+    if (self.insertMusicView) {
+        [self.insertMusicView audioPlay];
+    }
+}
+
+-(void)pause
+{
+    if (!self.isPlaying) {
+         return;
+     }
+     
+     [self.movieFile endProcessing];
+     
+     [self stopTimer];
+     
+     [self.player pause];
+     
+     self.isPlaying = NO;
+     
+     if (self.insertMusicView) {
+         [self.insertMusicView audioPause];
+     }
+}
+
 -(NSString *)formatSecondsToString:(NSInteger)seconds
 {
     if (seconds < 0) {
@@ -149,6 +196,7 @@ static CGFloat BUBBLEWIDTH = 180;
     return videoPath;
 }
 
+#pragma mark - 美颜滤镜
 -(void)cameraAddTargetWithType:(NSInteger)type
 {
     //再添加新的滤镜效果前，首先移除响应链上的滤镜
@@ -247,6 +295,7 @@ static CGFloat BUBBLEWIDTH = 180;
     [filter removeAllTargets];
 }
 
+#pragma mark - 贴纸，气泡文字
 -(DWVideoTrimmerView *)getTrimmerView:(DWVideoTrimmerViewStyle)style
 {
     DWVideoTrimmerView * trimmerView = [[DWVideoTrimmerView alloc]init];
@@ -288,48 +337,6 @@ static CGFloat BUBBLEWIDTH = 180;
     }
 }
 
--(void)play
-{
-    if (self.aleardyPresent) {
-        return;
-    }
-    
-    if (self.isPlaying) {
-        return;
-    }
-    
-    [self.movieFile startProcessing];
-    
-    [self startTimer];
-    
-    [self.player play];
-    
-    self.isPlaying = YES;
-    
-    if (self.insertMusicView) {
-        [self.insertMusicView audioPlay];
-    }
-}
-
--(void)pause
-{
-    if (!self.isPlaying) {
-         return;
-     }
-     
-     [self.movieFile endProcessing];
-     
-     [self stopTimer];
-     
-     [self.player pause];
-     
-     self.isPlaying = NO;
-     
-     if (self.insertMusicView) {
-         [self.insertMusicView audioPause];
-     }
-}
-
 ///获取视频的旋转角度
 -(CGFloat)getAngleFromAffineTransform:(CGAffineTransform)transform
 {
@@ -365,6 +372,482 @@ static CGFloat BUBBLEWIDTH = 180;
     double size = L / (sin(rotate) + cos(rotate));
     
     return size;
+}
+
+#pragma mark - 视频特效
+//查询最后的非视频特效滤镜
+-(GPUImageOutput *)searchEffectOutput:(GPUImageOutput *)output
+{
+    //视频特效滤镜添加顺序
+    //DWGPUImageShakeFilter
+    //DWGPUImageFlashFilter
+    //DWGPUImageSoulOutFilter
+    //DWGPUImageVertigoFilter
+    //DWGPUImageScaleFilter
+    GPUImageOutput * lastoutput = nil;
+    
+    for (id subTarget in output.targets) {
+        if (subTarget == self.filterView) {
+            [self.movieFile removeAllTargets];
+            lastoutput = output;
+            break;
+        }
+        GPUImageFilter * subFilter = (GPUImageFilter *)subTarget;
+
+        if (subFilter == self.effectShowFilter) {
+            lastoutput = output;
+            break;
+        }
+        
+        if ([subFilter isKindOfClass:[DWGPUImageShakeFilter class]]) {
+            //跳出递归
+            [subFilter removeAllTargets];
+            lastoutput = output;
+        }else{
+            lastoutput = [self searchEffectOutput:subFilter];
+        }
+    }
+    
+    return lastoutput;
+}
+
+//新增视频特效滤镜
+-(GPUImageFilter *)addEffectFiltersWithLastOutput:(GPUImageOutput *)output
+{
+    //视频特效滤镜添加顺序
+    //DWGPUImageShakeFilter
+    //DWGPUImageFlashFilter
+    //DWGPUImageSoulOutFilter
+    //DWGPUImageVertigoFilter
+    //DWGPUImageScaleFilter
+    NSMutableArray * shakeFilterArray = [NSMutableArray array];
+    NSMutableArray * flashFilterArray = [NSMutableArray array];
+    NSMutableArray * soulOutFilterArray = [NSMutableArray array];
+    NSMutableArray * vertigoFilterArray = [NSMutableArray array];
+    NSMutableArray * scaleFilterArray = [NSMutableArray array];
+
+    //处理每种滤镜需要显示的时间段
+    [self.effectsArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSInteger style = [[obj objectForKey:@"style"] integerValue];
+        switch (style) {
+            case 0:{
+                if (![[obj objectForKey:@"alreadyUndo"] boolValue]) {
+                    id effectLoadTime = [obj objectForKey:@"effectLoadTime"];
+                    if ([[effectLoadTime class] isSubclassOfClass:[NSDictionary class]]) {
+                        [shakeFilterArray addObject:effectLoadTime];
+                    }else{
+                        [shakeFilterArray addObjectsFromArray:effectLoadTime];
+                    }
+                }
+            }
+                break;
+            case 1:{
+                if (![[obj objectForKey:@"alreadyUndo"] boolValue]) {
+                    id effectLoadTime = [obj objectForKey:@"effectLoadTime"];
+                    if ([[effectLoadTime class] isSubclassOfClass:[NSDictionary class]]) {
+                        [flashFilterArray addObject:effectLoadTime];
+                    }else{
+                        [flashFilterArray addObjectsFromArray:effectLoadTime];
+                    }
+                }
+     
+            }
+                break;
+            case 2:{
+                if (![[obj objectForKey:@"alreadyUndo"] boolValue]) {
+                    id effectLoadTime = [obj objectForKey:@"effectLoadTime"];
+                    if ([[effectLoadTime class] isSubclassOfClass:[NSDictionary class]]) {
+                        [soulOutFilterArray addObject:effectLoadTime];
+                    }else{
+                        [soulOutFilterArray addObjectsFromArray:effectLoadTime];
+                    }
+                }
+            }
+                break;
+            case 3:{
+                if (![[obj objectForKey:@"alreadyUndo"] boolValue]) {
+                    id effectLoadTime = [obj objectForKey:@"effectLoadTime"];
+                    if ([[effectLoadTime class] isSubclassOfClass:[NSDictionary class]]) {
+                        [vertigoFilterArray addObject:effectLoadTime];
+                    }else{
+                        [vertigoFilterArray addObjectsFromArray:effectLoadTime];
+                    }
+                }
+            }
+                break;
+            case 4:{
+                if (![[obj objectForKey:@"alreadyUndo"] boolValue]) {
+                    id effectLoadTime = [obj objectForKey:@"effectLoadTime"];
+                    if ([[effectLoadTime class] isSubclassOfClass:[NSDictionary class]]) {
+                        [scaleFilterArray addObject:effectLoadTime];
+                    }else{
+                        [scaleFilterArray addObjectsFromArray:effectLoadTime];
+                    }
+                }
+            }
+                break;
+            default:
+                break;
+        }
+    }];
+        
+    DWGPUImageShakeFilter * shakeFilter = [[DWGPUImageShakeFilter alloc]init];
+    [shakeFilter setFrameProcessingCompletionBlock:^(GPUImageOutput * output, CMTime time) {
+        DWGPUImageShakeFilter * filter = (DWGPUImageShakeFilter *)output;
+        if (shakeFilterArray.count == 0) {
+            return;
+        }
+        //判断是否添加滤镜效果
+        CGFloat currentTime = CMTimeGetSeconds(time);
+        BOOL isShow = NO;
+        for (NSDictionary * effectLoadTimeDict in shakeFilterArray) {
+            CGFloat beginTime = [[effectLoadTimeDict objectForKey:@"beginTime"] floatValue];
+            CGFloat endTime = [[effectLoadTimeDict objectForKey:@"endTime"] floatValue];
+            if (currentTime >= beginTime && currentTime <= endTime) {
+                isShow = YES;
+                break;
+            }
+        }
+        if (isShow) {
+            filter.time = currentTime;
+        }else{
+            filter.time = 0.0;
+        }
+        
+    }];
+    
+    DWGPUImageFlashFilter * flashFilter = [[DWGPUImageFlashFilter alloc]init];
+    [flashFilter setFrameProcessingCompletionBlock:^(GPUImageOutput * output, CMTime time) {
+        DWGPUImageFlashFilter * filter = (DWGPUImageFlashFilter *)output;
+        if (flashFilterArray.count == 0) {
+            return;
+        }
+        //判断是否添加滤镜效果
+        CGFloat currentTime = CMTimeGetSeconds(time);
+        BOOL isShow = NO;
+        for (NSDictionary * effectLoadTimeDict in flashFilterArray) {
+            CGFloat beginTime = [[effectLoadTimeDict objectForKey:@"beginTime"] floatValue];
+            CGFloat endTime = [[effectLoadTimeDict objectForKey:@"endTime"] floatValue];
+            if (currentTime >= beginTime && currentTime <= endTime) {
+                isShow = YES;
+                break;
+            }
+        }
+        if (isShow) {
+            filter.time = currentTime;
+        }else{
+            filter.time = 0.0;
+        }
+    }];
+    
+    DWGPUImageSoulOutFilter * soulOutFilter = [[DWGPUImageSoulOutFilter alloc]init];
+    [soulOutFilter setFrameProcessingCompletionBlock:^(GPUImageOutput * output, CMTime time) {
+        DWGPUImageSoulOutFilter * filter = (DWGPUImageSoulOutFilter *)output;
+        if (soulOutFilterArray.count == 0) {
+            return;
+        }
+        //判断是否添加滤镜效果
+        CGFloat currentTime = CMTimeGetSeconds(time);
+        BOOL isShow = NO;
+        for (NSDictionary * effectLoadTimeDict in soulOutFilterArray) {
+            CGFloat beginTime = [[effectLoadTimeDict objectForKey:@"beginTime"] floatValue];
+            CGFloat endTime = [[effectLoadTimeDict objectForKey:@"endTime"] floatValue];
+            if (currentTime >= beginTime && currentTime <= endTime) {
+                isShow = YES;
+                break;
+            }
+        }
+        if (isShow) {
+            filter.time = currentTime;
+        }else{
+            filter.time = 0.0;
+        }
+    }];
+    
+    DWGPUImageVertigoFilter * vertigoFilter = [[DWGPUImageVertigoFilter alloc]init];
+    [vertigoFilter setFrameProcessingCompletionBlock:^(GPUImageOutput * output, CMTime time) {
+        DWGPUImageVertigoFilter * filter = (DWGPUImageVertigoFilter *)output;
+        if (vertigoFilterArray.count == 0) {
+            return;
+        }
+        //判断是否添加滤镜效果
+        CGFloat currentTime = CMTimeGetSeconds(time);
+        BOOL isShow = NO;
+        for (NSDictionary * effectLoadTimeDict in vertigoFilterArray) {
+            CGFloat beginTime = [[effectLoadTimeDict objectForKey:@"beginTime"] floatValue];
+            CGFloat endTime = [[effectLoadTimeDict objectForKey:@"endTime"] floatValue];
+            if (currentTime >= beginTime && currentTime <= endTime) {
+                isShow = YES;
+                break;
+            }
+        }
+        if (isShow) {
+            filter.time = currentTime;
+        }else{
+            filter.time = 0.0;
+        }
+    }];
+    
+    DWGPUImageScaleFilter * scaleFilter = [[DWGPUImageScaleFilter alloc]init];
+    [scaleFilter setFrameProcessingCompletionBlock:^(GPUImageOutput * output, CMTime time) {
+        DWGPUImageScaleFilter * filter = (DWGPUImageScaleFilter *)output;
+        if (scaleFilterArray.count == 0) {
+            return;
+        }
+        //判断是否添加滤镜效果
+        CGFloat currentTime = CMTimeGetSeconds(time);
+        BOOL isShow = NO;
+        for (NSDictionary * effectLoadTimeDict in scaleFilterArray) {
+            CGFloat beginTime = [[effectLoadTimeDict objectForKey:@"beginTime"] floatValue];
+            CGFloat endTime = [[effectLoadTimeDict objectForKey:@"endTime"] floatValue];
+            if (currentTime >= beginTime && currentTime <= endTime) {
+                isShow = YES;
+                break;
+            }
+        }
+        if (isShow) {
+            filter.time = currentTime;
+        }else{
+            filter.time = 0.0;
+        }
+    }];
+    
+    [output addTarget:shakeFilter];
+    [shakeFilter addTarget:flashFilter];
+    [flashFilter addTarget:soulOutFilter];
+    [soulOutFilter addTarget:vertigoFilter];
+    [vertigoFilter addTarget:scaleFilter];
+    return scaleFilter;
+}
+
+//处理视频特效数据
+-(void)dealEffectsData
+{
+//    CGFloat duration = CMTimeGetSeconds(self.videoDuration);
+    
+    for (int i = 0; i < self.effectsArray.count; i++) {
+        NSMutableDictionary * effectParams = [self.effectsArray objectAtIndex:i];
+        //选中特效时间段
+        CGFloat undoBeginTime = [[effectParams objectForKey:@"undoBeginTime"] floatValue];
+        CGFloat undoEndTime = [[effectParams objectForKey:@"undoEndTime"] floatValue];
+        
+        NSMutableArray * effectLoadTimeArray = [NSMutableArray array];
+        //添加自身位置
+        NSInteger selfLoc = undoBeginTime * 1000000;
+        NSInteger selfLen = (undoEndTime - undoBeginTime) * 1000000;
+        [effectLoadTimeArray addObject:[NSValue valueWithRange:NSMakeRange(selfLoc, selfLen)]];
+        
+        for (int j = i + 1; j < self.effectsArray.count; j++) {
+            NSDictionary * nextEffectParams = [self.effectsArray objectAtIndex:j];
+            if ([[nextEffectParams objectForKey:@"alreadyUndo"] boolValue]) {
+                //已撤销操作
+                continue;
+            }
+            
+            CGFloat nextUndoBeginTime = [[nextEffectParams objectForKey:@"undoBeginTime"] floatValue];
+            CGFloat nextUndoEndTime = [[nextEffectParams objectForKey:@"undoEndTime"] floatValue];
+            if (undoBeginTime >= nextUndoBeginTime && undoBeginTime <= nextUndoEndTime) {
+                if (undoEndTime >= nextUndoEndTime) {
+                    //覆盖部分
+                    NSInteger loc = nextUndoEndTime * 1000000;
+                    NSInteger len = (undoEndTime - nextUndoEndTime) * 1000000;
+                    
+                    [effectLoadTimeArray addObject:[NSValue valueWithRange:NSMakeRange(loc, len)]];
+                }else{
+                    //全部覆盖
+                }
+           }else if (nextUndoBeginTime > undoBeginTime && nextUndoBeginTime < undoEndTime) {
+
+                if (undoEndTime < nextUndoEndTime) {
+                    //部分覆盖
+                    NSInteger loc = undoBeginTime * 1000000;
+                    NSInteger len = (nextUndoBeginTime - undoBeginTime) * 1000000;
+                    
+                    [effectLoadTimeArray addObject:[NSValue valueWithRange:NSMakeRange(loc, len)]];
+
+                }else {
+                    //截断的情况
+                    NSInteger fLoc = undoBeginTime * 1000000;
+                    NSInteger fLen = (nextUndoBeginTime - undoBeginTime) * 1000000;
+                    NSRange fRange = NSMakeRange(fLoc, fLen);
+                    
+                    NSInteger sLoc = nextUndoEndTime * 1000000;
+                    NSInteger sLen = (undoEndTime - nextUndoEndTime) * 1000000;
+                    NSRange sRange = NSMakeRange(sLoc, sLen);
+                    
+                    [effectLoadTimeArray addObject:@[[NSValue valueWithRange:fRange],[NSValue valueWithRange:sRange]]];
+                    
+                }
+            }else{
+
+                
+            }
+            
+        }
+        
+//        NSLog(@"effectLoadTimeArray:%@",effectLoadTimeArray);
+        
+        //处理effectLoadTimeArray 计算交集时间
+        id effectLoadTime = [self getEffectTimeIntersectionWithArray:effectLoadTimeArray];
+        
+        [effectParams setValue:effectLoadTime forKey:@"effectLoadTime"];
+
+    }
+}
+
+//对视频特效时间进行处理，计算特效加载的时间段
+-(id)getEffectTimeIntersectionWithArray:(NSArray *)timesArray
+{
+    //处理时间数据
+    /*
+     这是正序的数据
+     (
+             {
+             effectLoadTime =         {
+                 beginTime = "1.134999";
+                 endTime = "3.736665";
+             };
+             style = 2;
+             undoBeginTime = "1.135000";
+             undoEndTime = "3.736667";
+         },
+             {
+             effectLoadTime =         {
+                 beginTime = "2.001667022705078";
+                 endTime = "4.803332805633545";
+             };
+             style = 3;
+             undoBeginTime = "2.001667";
+             undoEndTime = "4.803333";
+         }
+     )
+     */
+    
+    NSRange defaultRange = NSMakeRange(0, 0);
+    NSRange range1 = defaultRange;
+    NSRange range2 = defaultRange;
+    //取第一个元素，作为对照组
+    id obj = timesArray.firstObject;
+    if ([[obj class] isSubclassOfClass:[NSArray class]]) {
+        NSArray * array = (NSArray *)obj;
+        range1 = [array.firstObject rangeValue];
+        range2 = [array.lastObject rangeValue];
+    }else{
+        range1 = [(NSValue *)obj rangeValue];
+    }
+    
+    for (int i = 1; i < timesArray.count; i++) {
+        id nextObj = [timesArray objectAtIndex:i];
+        
+        NSRange nextRange1 = defaultRange;
+        NSRange nextRange2 = defaultRange;
+        if ([[nextObj class] isSubclassOfClass:[NSArray class]]) {
+            NSArray * nextArray = (NSArray *)nextObj;
+            nextRange1 = [nextArray.firstObject rangeValue];
+            nextRange2 = [nextArray.lastObject rangeValue];
+        }else{
+            nextRange1 = [(NSValue *)nextObj rangeValue];
+        }
+        
+        NSRange tmpRange1 = range1;
+        NSRange tmpRange2 = range2;
+        
+        if (NSEqualRanges(tmpRange2, defaultRange)) {
+            //无截断情况
+            if (NSEqualRanges(nextRange2, defaultRange)) {
+                range1 = NSIntersectionRange(tmpRange1, nextRange1);
+            }else{
+                range1 = NSIntersectionRange(tmpRange1, nextRange1);
+                range2 = NSIntersectionRange(tmpRange1, nextRange2);
+            }
+        }else{
+            //被截断
+            if (NSEqualRanges(nextRange2, defaultRange)) {
+                range1 = NSIntersectionRange(tmpRange1, nextRange1);
+                range2 = NSIntersectionRange(tmpRange2, nextRange1);
+            }else{
+                range1 = NSIntersectionRange(tmpRange1, nextRange1);
+                range2 = NSIntersectionRange(tmpRange2, nextRange2);
+            }
+        }
+    }
+    
+    //拿到最终range1 range2
+    if (NSEqualRanges(range2, defaultRange)) {
+        CGFloat beginTime = range1.location / 1000000.0;
+        CGFloat endTime = NSMaxRange(range1) / 1000000.0;
+        return @{@"beginTime":@(beginTime),@"endTime":@(endTime)};
+    }else{
+        CGFloat fBeginTime = range1.location / 1000000.0;
+        CGFloat fEndTime = NSMaxRange(range1) / 1000000.0;
+        
+        CGFloat sBeginTime = range2.location / 1000000.0;
+        CGFloat sEndTime = NSMaxRange(range2) / 1000000.0;
+        return @[@{@"beginTime":@(fBeginTime),@"endTime":@(fEndTime)},
+                 @{@"beginTime":@(sBeginTime),@"endTime":@(sEndTime)}];
+    }
+}
+
+//视频特效编辑取消，处理数据
+-(void)effectEditCancelDealData
+{
+    if (self.effectsArray.count == 0) {
+        return;
+    }
+
+    //删除所有新增数据
+    NSMutableArray * effectsArray = [self.effectsArray copy];
+    [effectsArray enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([[obj objectForKey:@"new"] boolValue]) {
+            [self.effectsArray removeObjectAtIndex:idx];
+        }
+    }];
+    
+    //恢复撤销操作的数据
+    [self.effectsArray enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([[obj objectForKey:@"alreadyUndo"] boolValue]) {
+            [obj setValue:@NO forKey:@"alreadyUndo"];
+        }
+    }];
+}
+
+//视频特效编辑完成，处理数据
+-(void)effectEditFinishDealData
+{
+    if (self.effectsArray.count == 0) {
+        return;
+    }
+    
+    //如果有撤销操作，移除撤销操作数据
+    NSMutableArray * effectsArray = [self.effectsArray copy];
+    [effectsArray enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([[obj objectForKey:@"alreadyUndo"] boolValue]) {
+            [self.effectsArray removeObjectAtIndex:idx];
+        }
+    }];
+    
+    //如果还有新增操作，处理新增操作
+    [self.effectsArray enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([[obj objectForKey:@"new"] boolValue]) {
+            [obj setValue:@NO forKey:@"new"];
+        }
+    }];
+
+}
+
+//视频特效撤销，处理数据
+-(void)effectEditUndoDealData
+{
+    if (self.effectsArray.count == 0) {
+        return;
+    }
+    
+    [self.effectsArray enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (![[obj objectForKey:@"alreadyUndo"] boolValue]) {
+            [obj setValue:@YES forKey:@"alreadyUndo"];
+            *stop = YES;
+        }
+    }];
 }
 
 #pragma mark - 视频处理
@@ -473,10 +956,14 @@ static CGFloat BUBBLEWIDTH = 180;
         }
     }
     
-    if (!lastFilter) {
+    if (!lastFilter && self.effectsArray.count == 0) {
         //没有添加滤镜特效
         [self addMusicWithVideoUrl:videoUrl];
         return;
+    }
+    
+    if (self.effectsArray.count != 0) {
+        lastFilter = [self addEffectFiltersWithLastOutput:lastFilter ? lastFilter : self.writeMovieFile];
     }
     
     [lastFilter addTarget:self.writeMovieWriter];
@@ -500,7 +987,7 @@ static CGFloat BUBBLEWIDTH = 180;
             weakSelf.writeMovieWriter = nil;
             weakSelf.writeMovieFile = nil;
         });
-      }];
+    }];
 }
 
 //添加音频
@@ -1052,7 +1539,7 @@ static CGFloat BUBBLEWIDTH = 180;
             }
         }
     }
- 
+    
     self.filterView.transform = CGAffineTransformIdentity;
     
     self.editBgView.hidden = NO;
@@ -1086,6 +1573,196 @@ static CGFloat BUBBLEWIDTH = 180;
     self.filterView.transform = CGAffineTransformIdentity;
 
     self.editBgView.hidden = NO;
+}
+
+#pragma mark - DWVideoEffectsViewDelegate
+//取消回调
+-(void)videoEffectsViewDismiss
+{
+    self.editBgView.hidden = NO;
+
+    self.filterView.transform = CGAffineTransformIdentity;
+    
+    //处理视频特效数据
+    [self effectEditCancelDealData];
+    
+    [self dealEffectsData];
+    
+    GPUImageOutput * lastOutput = [self searchEffectOutput:self.movieFile];
+    if (self.effectsArray.count == 0) {
+        //无视频特效，删除特效滤镜
+        [lastOutput addTarget:self.filterView];
+    }else{
+//        [self addEffectFiltersWithLastOutput:lastOutput];
+        GPUImageFilter * filter = [self addEffectFiltersWithLastOutput:lastOutput];
+        [filter addTarget:self.filterView];
+    }
+
+}
+
+//确定回调
+-(void)videoEffectsViewSure
+{
+    self.editBgView.hidden = NO;
+
+    self.filterView.transform = CGAffineTransformIdentity;
+
+    self.effectsView.hidden = YES;
+    
+    [self effectEditFinishDealData];
+    
+    [self dealEffectsData];
+    
+    GPUImageOutput * lastOutput = [self searchEffectOutput:self.movieFile];
+    if (self.effectsArray.count == 0) {
+        //无视频特效，删除特效滤镜
+        [lastOutput addTarget:self.filterView];
+    }else{
+        GPUImageFilter * filter = [self addEffectFiltersWithLastOutput:lastOutput];
+        [filter addTarget:self.filterView];
+    }
+}
+
+//撤销回调
+-(void)videoEffectsViewUndo
+{
+    [self effectEditUndoDealData];
+    
+    [self dealEffectsData];
+    
+    GPUImageOutput * lastOutput = [self searchEffectOutput:self.movieFile];
+
+    GPUImageFilter * filter = [self addEffectFiltersWithLastOutput:lastOutput];
+    [filter addTarget:self.filterView];
+}
+
+//开始添加特效
+-(void)videoEffectsViewStartAddEffect:(NSInteger)style
+{
+    if (self.effectsView) {
+//        self.effectsView.position = self.movieFile.progress;
+        [self.effectsView setPosition:self.movieFile.progress WithRepeat:NO];
+    }
+
+    GPUImageOutput * lastOutput = [self searchEffectOutput:self.movieFile];
+    
+    switch (style) {
+        case 0:{
+            DWGPUImageShakeFilter * shakeFilter = [[DWGPUImageShakeFilter alloc]init];
+            [lastOutput addTarget:shakeFilter];
+            self.effectShowFilter = shakeFilter;
+            [shakeFilter setFrameProcessingCompletionBlock:^(GPUImageOutput * output, CMTime time) {
+                DWGPUImageShakeFilter * filter = (DWGPUImageShakeFilter *)output;
+                filter.time = CMTimeGetSeconds(time);
+            }];
+        }
+            break;
+        case 1:{
+            DWGPUImageFlashFilter * flashFilter = [[DWGPUImageFlashFilter alloc]init];
+            [lastOutput addTarget:flashFilter];
+            self.effectShowFilter = flashFilter;
+            [flashFilter setFrameProcessingCompletionBlock:^(GPUImageOutput * output, CMTime time) {
+                DWGPUImageFlashFilter * filter = (DWGPUImageFlashFilter *)output;
+                filter.time = CMTimeGetSeconds(time);
+            }];
+        }
+            break;
+        case 2:{
+            DWGPUImageSoulOutFilter * soulOutFilter = [[DWGPUImageSoulOutFilter alloc]init];
+            [lastOutput addTarget:soulOutFilter];
+            self.effectShowFilter = soulOutFilter;
+            [soulOutFilter setFrameProcessingCompletionBlock:^(GPUImageOutput * output, CMTime time) {
+                DWGPUImageSoulOutFilter * filter = (DWGPUImageSoulOutFilter *)output;
+                filter.time = CMTimeGetSeconds(time);
+            }];
+        }
+            break;
+        case 3:{
+            DWGPUImageVertigoFilter * vertigoFilter = [[DWGPUImageVertigoFilter alloc]init];
+            [lastOutput addTarget:vertigoFilter];
+            self.effectShowFilter = vertigoFilter;
+            [vertigoFilter setFrameProcessingCompletionBlock:^(GPUImageOutput * output, CMTime time) {
+                DWGPUImageVertigoFilter * filter = (DWGPUImageVertigoFilter *)output;
+                filter.time = CMTimeGetSeconds(time);
+            }];
+        }
+            break;
+        case 4:{
+            DWGPUImageScaleFilter * scaleFilter = [[DWGPUImageScaleFilter alloc]init];
+            [lastOutput addTarget:scaleFilter];
+            self.effectShowFilter = scaleFilter;
+            [scaleFilter setFrameProcessingCompletionBlock:^(GPUImageOutput * output, CMTime time) {
+                DWGPUImageScaleFilter * filter = (DWGPUImageScaleFilter *)output;
+                filter.time = CMTimeGetSeconds(time);
+            }];
+        }
+            break;
+        default:
+            break;
+    }
+    
+    [self.effectShowFilter addTarget:self.filterView];
+
+    
+    /*
+     记录视频特效数据，eg:
+
+     @{@"fragmentTimes":@[@{beginTime:,endTime},@{beginTime:,endTime}]特效显示时间段，最多两端,
+       @"style":@1,
+       @"undoBeginTime":开始添加特效时间,
+       @"undoEndTime":结束添加特效时间,
+       @"new":是否是当次新增的视频特效,
+       @"alreadyUndo":是否执行撤销操作
+     }
+     
+     */
+    CGFloat duration = CMTimeGetSeconds(self.videoDuration);
+    CGFloat undoBeginTime = duration * self.movieFile.progress;
+    
+    NSMutableDictionary * effectParams = [@{@"style":@(style),
+//                                            @"undoBeginTime":[NSNumber numberWithFloat:undoBeginTime],
+                                            @"undoBeginTime":[NSString stringWithFormat:@"%.6f",undoBeginTime],
+                                            @"undoEndTime":@(-1),
+                                            @"new":@YES,
+                                            @"alreadyUndo":@NO} mutableCopy];
+    
+    [self.effectsArray addObject:effectParams];
+    
+}
+
+//结束添加特效
+-(void)videoEffectsViewStopAddEffect
+{
+    if (self.effectsView) {
+//        self.effectsView.position = self.movieFile.progress;
+        if (self.effectsView.isRepeat) {
+//            return;
+        }else{
+            [self.effectsView setPosition:self.movieFile.progress WithRepeat:NO];
+        }
+        
+//        [self.effectsView setPosition:self.movieFile.progress WithRepeat:NO];
+    }
+    
+    //当前特效添加完毕，处理时间数据
+    NSMutableDictionary * effectParams = self.effectsArray.lastObject;
+    CGFloat duration = CMTimeGetSeconds(self.videoDuration);
+    CGFloat undoEndTime = self.effectsView.isRepeat ? duration : duration * self.movieFile.progress;
+    [effectParams setValue:[NSString stringWithFormat:@"%.6f",undoEndTime] forKey:@"undoEndTime"];
+    [self dealEffectsData];
+    
+//    NSLog(@"effectsArray:%@",self.effectsArray);
+    
+    GPUImageOutput * lastOutput = [self searchEffectOutput:self.movieFile];
+//    NSLog(@"lastOutput %@",lastOutput);
+    
+    //清空临时视频特效
+    [self.effectShowFilter removeAllTargets];
+    self.effectShowFilter = nil;
+    
+    GPUImageFilter * filter = [self addEffectFiltersWithLastOutput:lastOutput];
+    [filter addTarget:self.filterView];
+//    [self addEffectFiltersWithLastOutput:lastOutput];
 }
 
 #pragma mark - action
@@ -1216,6 +1893,28 @@ static CGFloat BUBBLEWIDTH = 180;
         }];
         
     }
+    
+    if (button.tag == 105) {
+        //特效
+        CGFloat scale = (ScreenHeight - (190 + self.notchBottom)) / ScreenHeight;
+        self.filterView.transform = CGAffineTransformMake(scale, 0, 0, scale, 0, -100);
+        
+        if (!self.effectsView) {
+            self.effectsView = [[DWVideoEffectsView alloc]initWithVideoURL:self.videoURL];
+            //同步视频播放进度
+            //        self.effectsView.position = self.movieFile.progress;
+            [self.effectsView setPosition:self.movieFile.progress WithRepeat:NO];
+            
+            self.effectsView.delegate = self;
+            [self.view addSubview:self.effectsView];
+            
+            [self.effectsView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.edges.equalTo(self.view);
+            }];
+        }
+
+        self.effectsView.hidden = NO;
+    }
 }
 
 -(void)timerAction
@@ -1229,6 +1928,11 @@ static CGFloat BUBBLEWIDTH = 180;
         CMTime seekTime = CMTimeMake(self.videoDuration.value * self.movieFile.progress, self.videoDuration.timescale);
         [self.player seekToTime:seekTime];
         [self.player play];
+        
+        if (self.effectsView) {
+            [self.effectsView setPosition:self.movieFile.progress WithRepeat:YES];
+//            self.effectsView.position = self.movieFile.progress;
+        }
     }
     
     self.currentLabel.text = [self formatSecondsToString:(self.videoDuration.value / self.videoDuration.timescale) * self.movieFile.progress];
@@ -1313,8 +2017,8 @@ static CGFloat BUBBLEWIDTH = 180;
         make.width.equalTo(@59);
     }];
     
-    NSArray * titles = @[@"美颜",@"滤镜",@"音乐",@"贴纸",@"文字"];
-    NSArray * images = @[@"icon_beauty_close.png",@"icon_filter.png",@"icon_music.png",@"icon_sticker.png",@"icon_text.png"];
+    NSArray * titles = @[@"美颜",@"滤镜",@"音乐",@"贴纸",@"文字",@"特效"];
+    NSArray * images = @[@"icon_beauty_close.png",@"icon_filter.png",@"icon_music.png",@"icon_sticker.png",@"icon_text.png",@"icon_effect.png"];
     
     [self.view addSubview:self.editBgView];
     [self.editBgView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -1385,7 +2089,7 @@ static CGFloat BUBBLEWIDTH = 180;
 {
     self.movieFile = [[GPUImageMovie alloc]initWithURL:self.videoURL];
     [self.movieFile addTarget:self.filterView];
-    
+
     self.movieFile.shouldRepeat = YES;
     self.movieFile.playAtActualSpeed = YES;
     
@@ -1408,7 +2112,7 @@ static CGFloat BUBBLEWIDTH = 180;
         [self stopTimer];
     }
     
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerAction) userInfo:nil repeats:YES];
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:0.25 target:self selector:@selector(timerAction) userInfo:nil repeats:YES];
 }
 
 -(void)stopTimer
@@ -1555,6 +2259,14 @@ static CGFloat BUBBLEWIDTH = 180;
                             [@{@"name":@"aLIEz ",@"author":@"澤野弘之",@"time":@"04:28",@"path":[[NSBundle mainBundle] pathForResource:@"aLIEz" ofType:@"mp3"],@"isSelect":@NO} mutableCopy]];
     }
     return _musicListArray;
+}
+
+-(NSMutableArray *)effectsArray
+{
+    if (!_effectsArray) {
+        _effectsArray = [[NSMutableArray alloc]init];
+    }
+    return _effectsArray;
 }
 
 /*
